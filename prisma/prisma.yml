@@ -1,0 +1,15 @@
+# The HTTP endpoint for your Prisma API
+#endpoint: ''endpoint: https://eu1.prisma.sh/neword-2bedf8/polytechCampusApi/dev
+
+
+# Points to the file that contains your datamodel
+datamodel: datamodel.prisma
+
+# Specifies language & location for the generated Prisma client
+generate:
+  - generator: javascript-client
+    output: ../src/generated/prisma-client
+# to automatically generate the client after the deployement
+hooks:
+  post-deploy:
+    - prisma generate

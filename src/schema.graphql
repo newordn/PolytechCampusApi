@@ -1,0 +1,20 @@
+type Query{
+    info:String!
+}
+type Mutation{
+    logIn(matricule:String!,password:String!): AuthPayload
+    signUp(name:String!,matricule:String!,email:String!,filiere:String!,option:String!,password:String!): AuthPayload
+}
+type AuthPayload{
+    token: String
+    user: User
+}
+type User{
+    id: ID!
+    name:String!
+    matricule: String!
+    email: String!
+    filiere: String!
+    option: String!
+    password:String!
+}

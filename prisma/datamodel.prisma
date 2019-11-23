@@ -1,0 +1,9 @@
+type User{
+    id: ID! @id
+    name:String!
+    matricule: String! @unique
+    email: String! @unique
+    filiere: String!
+    option: String!
+    password: String!
+}
