@@ -1,6 +1,7 @@
 type Query{
     info:String!
     users: [User!]!
+    crews: [Crew!]!
 }
 type Mutation{
     logIn(matricule:String!,password:String!): AuthPayload
