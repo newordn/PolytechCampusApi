@@ -1,6 +1,8 @@
-const APP_SECRET = "POLYTECTCAMPUSAPPSECRET"
+const {APP_SECRET} = require('../helpers/user')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const {getUserId} = require('../helpers/user')
+
 
 async function signUp(parent,args,context,info)
 {
@@ -28,7 +30,16 @@ async function logIn(parent,args,context,info)
     }
 }
 
+async function crew(parent,args,context,info)
+{
+    const userId = getUserId(context)
+    const users = args.users.map( v=>({id: v}))
+     crew = await context.prisma.createCrew({...args,users:{connect: users}})
+    return crew
+}
+
 module.exports={
     signUp,
-    logIn
+    logIn,
+    crew
 }

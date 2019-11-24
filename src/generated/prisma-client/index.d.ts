@@ -16,6 +16,7 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
 export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
+  crew: (where?: CrewWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
 }
 
@@ -38,6 +39,25 @@ export interface Prisma {
    * Queries
    */
 
+  crew: (where: CrewWhereUniqueInput) => CrewNullablePromise;
+  crews: (args?: {
+    where?: CrewWhereInput;
+    orderBy?: CrewOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Crew>;
+  crewsConnection: (args?: {
+    where?: CrewWhereInput;
+    orderBy?: CrewOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => CrewConnectionPromise;
   user: (where: UserWhereUniqueInput) => UserNullablePromise;
   users: (args?: {
     where?: UserWhereInput;
@@ -63,6 +83,22 @@ export interface Prisma {
    * Mutations
    */
 
+  createCrew: (data: CrewCreateInput) => CrewPromise;
+  updateCrew: (args: {
+    data: CrewUpdateInput;
+    where: CrewWhereUniqueInput;
+  }) => CrewPromise;
+  updateManyCrews: (args: {
+    data: CrewUpdateManyMutationInput;
+    where?: CrewWhereInput;
+  }) => BatchPayloadPromise;
+  upsertCrew: (args: {
+    where: CrewWhereUniqueInput;
+    create: CrewCreateInput;
+    update: CrewUpdateInput;
+  }) => CrewPromise;
+  deleteCrew: (where: CrewWhereUniqueInput) => CrewPromise;
+  deleteManyCrews: (where?: CrewWhereInput) => BatchPayloadPromise;
   createUser: (data: UserCreateInput) => UserPromise;
   updateUser: (args: {
     data: UserUpdateInput;
@@ -88,6 +124,9 @@ export interface Prisma {
 }
 
 export interface Subscription {
+  crew: (
+    where?: CrewSubscriptionWhereInput
+  ) => CrewSubscriptionPayloadSubscription;
   user: (
     where?: UserSubscriptionWhereInput
   ) => UserSubscriptionPayloadSubscription;
@@ -117,7 +156,89 @@ export type UserOrderByInput =
   | "password_ASC"
   | "password_DESC";
 
+export type CrewOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "title_ASC"
+  | "title_DESC"
+  | "description_ASC"
+  | "description_DESC";
+
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
+
+export interface UserUpdateWithoutCrewsDataInput {
+  name?: Maybe<String>;
+  matricule?: Maybe<String>;
+  email?: Maybe<String>;
+  filiere?: Maybe<String>;
+  option?: Maybe<String>;
+  password?: Maybe<String>;
+}
+
+export type CrewWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface UserUpdateManyWithWhereNestedInput {
+  where: UserScalarWhereInput;
+  data: UserUpdateManyDataInput;
+}
+
+export interface CrewWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
+  description?: Maybe<String>;
+  description_not?: Maybe<String>;
+  description_in?: Maybe<String[] | String>;
+  description_not_in?: Maybe<String[] | String>;
+  description_lt?: Maybe<String>;
+  description_lte?: Maybe<String>;
+  description_gt?: Maybe<String>;
+  description_gte?: Maybe<String>;
+  description_contains?: Maybe<String>;
+  description_not_contains?: Maybe<String>;
+  description_starts_with?: Maybe<String>;
+  description_not_starts_with?: Maybe<String>;
+  description_ends_with?: Maybe<String>;
+  description_not_ends_with?: Maybe<String>;
+  users_every?: Maybe<UserWhereInput>;
+  users_some?: Maybe<UserWhereInput>;
+  users_none?: Maybe<UserWhereInput>;
+  AND?: Maybe<CrewWhereInput[] | CrewWhereInput>;
+  OR?: Maybe<CrewWhereInput[] | CrewWhereInput>;
+  NOT?: Maybe<CrewWhereInput[] | CrewWhereInput>;
+}
+
+export interface UserCreateManyWithoutCrewsInput {
+  create?: Maybe<UserCreateWithoutCrewsInput[] | UserCreateWithoutCrewsInput>;
+  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+}
 
 export interface UserCreateInput {
   id?: Maybe<ID_Input>;
@@ -127,9 +248,20 @@ export interface UserCreateInput {
   filiere: String;
   option: String;
   password: String;
+  crews?: Maybe<CrewCreateManyWithoutUsersInput>;
 }
 
-export interface UserUpdateInput {
+export interface UserCreateWithoutCrewsInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  matricule: String;
+  email: String;
+  filiere: String;
+  option: String;
+  password: String;
+}
+
+export interface UserUpdateManyDataInput {
   name?: Maybe<String>;
   matricule?: Maybe<String>;
   email?: Maybe<String>;
@@ -138,13 +270,247 @@ export interface UserUpdateInput {
   password?: Maybe<String>;
 }
 
-export interface UserUpdateManyMutationInput {
+export interface CrewUpdateInput {
+  title?: Maybe<String>;
+  description?: Maybe<String>;
+  users?: Maybe<UserUpdateManyWithoutCrewsInput>;
+}
+
+export interface CrewSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<CrewWhereInput>;
+  AND?: Maybe<CrewSubscriptionWhereInput[] | CrewSubscriptionWhereInput>;
+  OR?: Maybe<CrewSubscriptionWhereInput[] | CrewSubscriptionWhereInput>;
+  NOT?: Maybe<CrewSubscriptionWhereInput[] | CrewSubscriptionWhereInput>;
+}
+
+export interface UserUpdateManyWithoutCrewsInput {
+  create?: Maybe<UserCreateWithoutCrewsInput[] | UserCreateWithoutCrewsInput>;
+  delete?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  set?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  disconnect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  update?: Maybe<
+    | UserUpdateWithWhereUniqueWithoutCrewsInput[]
+    | UserUpdateWithWhereUniqueWithoutCrewsInput
+  >;
+  upsert?: Maybe<
+    | UserUpsertWithWhereUniqueWithoutCrewsInput[]
+    | UserUpsertWithWhereUniqueWithoutCrewsInput
+  >;
+  deleteMany?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
+  updateMany?: Maybe<
+    UserUpdateManyWithWhereNestedInput[] | UserUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface CrewUpdateManyDataInput {
+  title?: Maybe<String>;
+  description?: Maybe<String>;
+}
+
+export interface UserUpdateWithWhereUniqueWithoutCrewsInput {
+  where: UserWhereUniqueInput;
+  data: UserUpdateWithoutCrewsDataInput;
+}
+
+export interface CrewScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
+  description?: Maybe<String>;
+  description_not?: Maybe<String>;
+  description_in?: Maybe<String[] | String>;
+  description_not_in?: Maybe<String[] | String>;
+  description_lt?: Maybe<String>;
+  description_lte?: Maybe<String>;
+  description_gt?: Maybe<String>;
+  description_gte?: Maybe<String>;
+  description_contains?: Maybe<String>;
+  description_not_contains?: Maybe<String>;
+  description_starts_with?: Maybe<String>;
+  description_not_starts_with?: Maybe<String>;
+  description_ends_with?: Maybe<String>;
+  description_not_ends_with?: Maybe<String>;
+  AND?: Maybe<CrewScalarWhereInput[] | CrewScalarWhereInput>;
+  OR?: Maybe<CrewScalarWhereInput[] | CrewScalarWhereInput>;
+  NOT?: Maybe<CrewScalarWhereInput[] | CrewScalarWhereInput>;
+}
+
+export interface CrewUpdateManyWithoutUsersInput {
+  create?: Maybe<CrewCreateWithoutUsersInput[] | CrewCreateWithoutUsersInput>;
+  delete?: Maybe<CrewWhereUniqueInput[] | CrewWhereUniqueInput>;
+  connect?: Maybe<CrewWhereUniqueInput[] | CrewWhereUniqueInput>;
+  set?: Maybe<CrewWhereUniqueInput[] | CrewWhereUniqueInput>;
+  disconnect?: Maybe<CrewWhereUniqueInput[] | CrewWhereUniqueInput>;
+  update?: Maybe<
+    | CrewUpdateWithWhereUniqueWithoutUsersInput[]
+    | CrewUpdateWithWhereUniqueWithoutUsersInput
+  >;
+  upsert?: Maybe<
+    | CrewUpsertWithWhereUniqueWithoutUsersInput[]
+    | CrewUpsertWithWhereUniqueWithoutUsersInput
+  >;
+  deleteMany?: Maybe<CrewScalarWhereInput[] | CrewScalarWhereInput>;
+  updateMany?: Maybe<
+    CrewUpdateManyWithWhereNestedInput[] | CrewUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface CrewUpsertWithWhereUniqueWithoutUsersInput {
+  where: CrewWhereUniqueInput;
+  update: CrewUpdateWithoutUsersDataInput;
+  create: CrewCreateWithoutUsersInput;
+}
+
+export interface UserUpsertWithWhereUniqueWithoutCrewsInput {
+  where: UserWhereUniqueInput;
+  update: UserUpdateWithoutCrewsDataInput;
+  create: UserCreateWithoutCrewsInput;
+}
+
+export interface CrewUpdateWithWhereUniqueWithoutUsersInput {
+  where: CrewWhereUniqueInput;
+  data: CrewUpdateWithoutUsersDataInput;
+}
+
+export interface UserScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
   name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
   matricule?: Maybe<String>;
+  matricule_not?: Maybe<String>;
+  matricule_in?: Maybe<String[] | String>;
+  matricule_not_in?: Maybe<String[] | String>;
+  matricule_lt?: Maybe<String>;
+  matricule_lte?: Maybe<String>;
+  matricule_gt?: Maybe<String>;
+  matricule_gte?: Maybe<String>;
+  matricule_contains?: Maybe<String>;
+  matricule_not_contains?: Maybe<String>;
+  matricule_starts_with?: Maybe<String>;
+  matricule_not_starts_with?: Maybe<String>;
+  matricule_ends_with?: Maybe<String>;
+  matricule_not_ends_with?: Maybe<String>;
   email?: Maybe<String>;
+  email_not?: Maybe<String>;
+  email_in?: Maybe<String[] | String>;
+  email_not_in?: Maybe<String[] | String>;
+  email_lt?: Maybe<String>;
+  email_lte?: Maybe<String>;
+  email_gt?: Maybe<String>;
+  email_gte?: Maybe<String>;
+  email_contains?: Maybe<String>;
+  email_not_contains?: Maybe<String>;
+  email_starts_with?: Maybe<String>;
+  email_not_starts_with?: Maybe<String>;
+  email_ends_with?: Maybe<String>;
+  email_not_ends_with?: Maybe<String>;
   filiere?: Maybe<String>;
+  filiere_not?: Maybe<String>;
+  filiere_in?: Maybe<String[] | String>;
+  filiere_not_in?: Maybe<String[] | String>;
+  filiere_lt?: Maybe<String>;
+  filiere_lte?: Maybe<String>;
+  filiere_gt?: Maybe<String>;
+  filiere_gte?: Maybe<String>;
+  filiere_contains?: Maybe<String>;
+  filiere_not_contains?: Maybe<String>;
+  filiere_starts_with?: Maybe<String>;
+  filiere_not_starts_with?: Maybe<String>;
+  filiere_ends_with?: Maybe<String>;
+  filiere_not_ends_with?: Maybe<String>;
   option?: Maybe<String>;
+  option_not?: Maybe<String>;
+  option_in?: Maybe<String[] | String>;
+  option_not_in?: Maybe<String[] | String>;
+  option_lt?: Maybe<String>;
+  option_lte?: Maybe<String>;
+  option_gt?: Maybe<String>;
+  option_gte?: Maybe<String>;
+  option_contains?: Maybe<String>;
+  option_not_contains?: Maybe<String>;
+  option_starts_with?: Maybe<String>;
+  option_not_starts_with?: Maybe<String>;
+  option_ends_with?: Maybe<String>;
+  option_not_ends_with?: Maybe<String>;
   password?: Maybe<String>;
+  password_not?: Maybe<String>;
+  password_in?: Maybe<String[] | String>;
+  password_not_in?: Maybe<String[] | String>;
+  password_lt?: Maybe<String>;
+  password_lte?: Maybe<String>;
+  password_gt?: Maybe<String>;
+  password_gte?: Maybe<String>;
+  password_contains?: Maybe<String>;
+  password_not_contains?: Maybe<String>;
+  password_starts_with?: Maybe<String>;
+  password_not_starts_with?: Maybe<String>;
+  password_ends_with?: Maybe<String>;
+  password_not_ends_with?: Maybe<String>;
+  AND?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
+  OR?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
+  NOT?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
+}
+
+export interface CrewCreateInput {
+  id?: Maybe<ID_Input>;
+  title: String;
+  description: String;
+  users?: Maybe<UserCreateManyWithoutCrewsInput>;
 }
 
 export interface UserWhereInput {
@@ -246,9 +612,63 @@ export interface UserWhereInput {
   password_not_starts_with?: Maybe<String>;
   password_ends_with?: Maybe<String>;
   password_not_ends_with?: Maybe<String>;
+  crews_every?: Maybe<CrewWhereInput>;
+  crews_some?: Maybe<CrewWhereInput>;
+  crews_none?: Maybe<CrewWhereInput>;
   AND?: Maybe<UserWhereInput[] | UserWhereInput>;
   OR?: Maybe<UserWhereInput[] | UserWhereInput>;
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
+}
+
+export interface UserUpdateManyMutationInput {
+  name?: Maybe<String>;
+  matricule?: Maybe<String>;
+  email?: Maybe<String>;
+  filiere?: Maybe<String>;
+  option?: Maybe<String>;
+  password?: Maybe<String>;
+}
+
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  matricule?: Maybe<String>;
+  email?: Maybe<String>;
+}>;
+
+export interface CrewCreateManyWithoutUsersInput {
+  create?: Maybe<CrewCreateWithoutUsersInput[] | CrewCreateWithoutUsersInput>;
+  connect?: Maybe<CrewWhereUniqueInput[] | CrewWhereUniqueInput>;
+}
+
+export interface CrewCreateWithoutUsersInput {
+  id?: Maybe<ID_Input>;
+  title: String;
+  description: String;
+}
+
+export interface CrewUpdateManyMutationInput {
+  title?: Maybe<String>;
+  description?: Maybe<String>;
+}
+
+export interface UserUpdateInput {
+  name?: Maybe<String>;
+  matricule?: Maybe<String>;
+  email?: Maybe<String>;
+  filiere?: Maybe<String>;
+  option?: Maybe<String>;
+  password?: Maybe<String>;
+  crews?: Maybe<CrewUpdateManyWithoutUsersInput>;
+}
+
+export interface CrewUpdateWithoutUsersDataInput {
+  title?: Maybe<String>;
+  description?: Maybe<String>;
+}
+
+export interface CrewUpdateManyWithWhereNestedInput {
+  where: CrewScalarWhereInput;
+  data: CrewUpdateManyDataInput;
 }
 
 export interface UserSubscriptionWhereInput {
@@ -262,46 +682,8 @@ export interface UserSubscriptionWhereInput {
   NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
 }
 
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  matricule?: Maybe<String>;
-  email?: Maybe<String>;
-}>;
-
 export interface NodeNode {
   id: ID_Output;
-}
-
-export interface AggregateUser {
-  count: Int;
-}
-
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface BatchPayload {
-  count: Long;
-}
-
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
-    Fragmentable {
-  count: () => Promise<Long>;
-}
-
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
 }
 
 export interface UserPreviousValues {
@@ -338,21 +720,59 @@ export interface UserPreviousValuesSubscription
   password: () => Promise<AsyncIterator<String>>;
 }
 
-export interface UserEdge {
-  node: User;
+export interface CrewEdge {
+  node: Crew;
   cursor: String;
 }
 
-export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
-  node: <T = UserPromise>() => T;
+export interface CrewEdgePromise extends Promise<CrewEdge>, Fragmentable {
+  node: <T = CrewPromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface UserEdgeSubscription
-  extends Promise<AsyncIterator<UserEdge>>,
+export interface CrewEdgeSubscription
+  extends Promise<AsyncIterator<CrewEdge>>,
     Fragmentable {
-  node: <T = UserSubscription>() => T;
+  node: <T = CrewSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface CrewPreviousValues {
+  id: ID_Output;
+  title: String;
+  description: String;
+}
+
+export interface CrewPreviousValuesPromise
+  extends Promise<CrewPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  title: () => Promise<String>;
+  description: () => Promise<String>;
+}
+
+export interface CrewPreviousValuesSubscription
+  extends Promise<AsyncIterator<CrewPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  title: () => Promise<AsyncIterator<String>>;
+  description: () => Promise<AsyncIterator<String>>;
+}
+
+export interface BatchPayload {
+  count: Long;
+}
+
+export interface BatchPayloadPromise
+  extends Promise<BatchPayload>,
+    Fragmentable {
+  count: () => Promise<Long>;
+}
+
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayload>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Long>>;
 }
 
 export interface UserSubscriptionPayload {
@@ -380,69 +800,105 @@ export interface UserSubscriptionPayloadSubscription
   previousValues: <T = UserPreviousValuesSubscription>() => T;
 }
 
-export interface User {
+export interface CrewSubscriptionPayload {
+  mutation: MutationType;
+  node: Crew;
+  updatedFields: String[];
+  previousValues: CrewPreviousValues;
+}
+
+export interface CrewSubscriptionPayloadPromise
+  extends Promise<CrewSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = CrewPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = CrewPreviousValuesPromise>() => T;
+}
+
+export interface CrewSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<CrewSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = CrewSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = CrewPreviousValuesSubscription>() => T;
+}
+
+export interface Crew {
   id: ID_Output;
-  name: String;
-  matricule: String;
-  email: String;
-  filiere: String;
-  option: String;
-  password: String;
+  title: String;
+  description: String;
 }
 
-export interface UserPromise extends Promise<User>, Fragmentable {
+export interface CrewPromise extends Promise<Crew>, Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  matricule: () => Promise<String>;
-  email: () => Promise<String>;
-  filiere: () => Promise<String>;
-  option: () => Promise<String>;
-  password: () => Promise<String>;
+  title: () => Promise<String>;
+  description: () => Promise<String>;
+  users: <T = FragmentableArray<User>>(args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
-export interface UserSubscription
-  extends Promise<AsyncIterator<User>>,
+export interface CrewSubscription
+  extends Promise<AsyncIterator<Crew>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  matricule: () => Promise<AsyncIterator<String>>;
-  email: () => Promise<AsyncIterator<String>>;
-  filiere: () => Promise<AsyncIterator<String>>;
-  option: () => Promise<AsyncIterator<String>>;
-  password: () => Promise<AsyncIterator<String>>;
+  title: () => Promise<AsyncIterator<String>>;
+  description: () => Promise<AsyncIterator<String>>;
+  users: <T = Promise<AsyncIterator<UserSubscription>>>(args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
-export interface UserNullablePromise
-  extends Promise<User | null>,
+export interface CrewNullablePromise
+  extends Promise<Crew | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  matricule: () => Promise<String>;
-  email: () => Promise<String>;
-  filiere: () => Promise<String>;
-  option: () => Promise<String>;
-  password: () => Promise<String>;
+  title: () => Promise<String>;
+  description: () => Promise<String>;
+  users: <T = FragmentableArray<User>>(args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
-export interface UserConnection {
+export interface CrewConnection {
   pageInfo: PageInfo;
-  edges: UserEdge[];
+  edges: CrewEdge[];
 }
 
-export interface UserConnectionPromise
-  extends Promise<UserConnection>,
+export interface CrewConnectionPromise
+  extends Promise<CrewConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<UserEdge>>() => T;
-  aggregate: <T = AggregateUserPromise>() => T;
+  edges: <T = FragmentableArray<CrewEdge>>() => T;
+  aggregate: <T = AggregateCrewPromise>() => T;
 }
 
-export interface UserConnectionSubscription
-  extends Promise<AsyncIterator<UserConnection>>,
+export interface CrewConnectionSubscription
+  extends Promise<AsyncIterator<CrewConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateUserSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<CrewEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateCrewSubscription>() => T;
 }
 
 export interface PageInfo {
@@ -468,10 +924,156 @@ export interface PageInfoSubscription
   endCursor: () => Promise<AsyncIterator<String>>;
 }
 
+export interface AggregateUser {
+  count: Int;
+}
+
+export interface AggregateUserPromise
+  extends Promise<AggregateUser>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUser>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface User {
+  id: ID_Output;
+  name: String;
+  matricule: String;
+  email: String;
+  filiere: String;
+  option: String;
+  password: String;
+}
+
+export interface UserPromise extends Promise<User>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  matricule: () => Promise<String>;
+  email: () => Promise<String>;
+  filiere: () => Promise<String>;
+  option: () => Promise<String>;
+  password: () => Promise<String>;
+  crews: <T = FragmentableArray<Crew>>(args?: {
+    where?: CrewWhereInput;
+    orderBy?: CrewOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface UserSubscription
+  extends Promise<AsyncIterator<User>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  matricule: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  filiere: () => Promise<AsyncIterator<String>>;
+  option: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  crews: <T = Promise<AsyncIterator<CrewSubscription>>>(args?: {
+    where?: CrewWhereInput;
+    orderBy?: CrewOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface UserNullablePromise
+  extends Promise<User | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  matricule: () => Promise<String>;
+  email: () => Promise<String>;
+  filiere: () => Promise<String>;
+  option: () => Promise<String>;
+  password: () => Promise<String>;
+  crews: <T = FragmentableArray<Crew>>(args?: {
+    where?: CrewWhereInput;
+    orderBy?: CrewOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface AggregateCrew {
+  count: Int;
+}
+
+export interface AggregateCrewPromise
+  extends Promise<AggregateCrew>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateCrewSubscription
+  extends Promise<AsyncIterator<AggregateCrew>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface UserConnection {
+  pageInfo: PageInfo;
+  edges: UserEdge[];
+}
+
+export interface UserConnectionPromise
+  extends Promise<UserConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<UserEdge>>() => T;
+  aggregate: <T = AggregateUserPromise>() => T;
+}
+
+export interface UserConnectionSubscription
+  extends Promise<AsyncIterator<UserConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateUserSubscription>() => T;
+}
+
+export interface UserEdge {
+  node: User;
+  cursor: String;
+}
+
+export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
+  node: <T = UserPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface UserEdgeSubscription
+  extends Promise<AsyncIterator<UserEdge>>,
+    Fragmentable {
+  node: <T = UserSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
 /*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+The `Boolean` scalar type represents `true` or `false`.
 */
-export type String = string;
+export type Boolean = boolean;
+
+/*
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
+*/
+export type Int = number;
 
 export type Long = string;
 
@@ -482,20 +1084,19 @@ export type ID_Input = string | number;
 export type ID_Output = string;
 
 /*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 */
-export type Int = number;
-
-/*
-The `Boolean` scalar type represents `true` or `false`.
-*/
-export type Boolean = boolean;
+export type String = string;
 
 /**
  * Model Metadata
  */
 
 export const models: Model[] = [
+  {
+    name: "Crew",
+    embedded: false
+  },
   {
     name: "User",
     embedded: false

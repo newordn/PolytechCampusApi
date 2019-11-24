@@ -3,7 +3,11 @@ module.exports = {
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-/* GraphQL */ `type AggregateUser {
+/* GraphQL */ `type AggregateCrew {
+  count: Int!
+}
+
+type AggregateUser {
   count: Int!
 }
 
@@ -11,9 +15,236 @@ type BatchPayload {
   count: Long!
 }
 
+type Crew {
+  id: ID!
+  title: String!
+  description: String!
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+}
+
+type CrewConnection {
+  pageInfo: PageInfo!
+  edges: [CrewEdge]!
+  aggregate: AggregateCrew!
+}
+
+input CrewCreateInput {
+  id: ID
+  title: String!
+  description: String!
+  users: UserCreateManyWithoutCrewsInput
+}
+
+input CrewCreateManyWithoutUsersInput {
+  create: [CrewCreateWithoutUsersInput!]
+  connect: [CrewWhereUniqueInput!]
+}
+
+input CrewCreateWithoutUsersInput {
+  id: ID
+  title: String!
+  description: String!
+}
+
+type CrewEdge {
+  node: Crew!
+  cursor: String!
+}
+
+enum CrewOrderByInput {
+  id_ASC
+  id_DESC
+  title_ASC
+  title_DESC
+  description_ASC
+  description_DESC
+}
+
+type CrewPreviousValues {
+  id: ID!
+  title: String!
+  description: String!
+}
+
+input CrewScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  AND: [CrewScalarWhereInput!]
+  OR: [CrewScalarWhereInput!]
+  NOT: [CrewScalarWhereInput!]
+}
+
+type CrewSubscriptionPayload {
+  mutation: MutationType!
+  node: Crew
+  updatedFields: [String!]
+  previousValues: CrewPreviousValues
+}
+
+input CrewSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: CrewWhereInput
+  AND: [CrewSubscriptionWhereInput!]
+  OR: [CrewSubscriptionWhereInput!]
+  NOT: [CrewSubscriptionWhereInput!]
+}
+
+input CrewUpdateInput {
+  title: String
+  description: String
+  users: UserUpdateManyWithoutCrewsInput
+}
+
+input CrewUpdateManyDataInput {
+  title: String
+  description: String
+}
+
+input CrewUpdateManyMutationInput {
+  title: String
+  description: String
+}
+
+input CrewUpdateManyWithoutUsersInput {
+  create: [CrewCreateWithoutUsersInput!]
+  delete: [CrewWhereUniqueInput!]
+  connect: [CrewWhereUniqueInput!]
+  set: [CrewWhereUniqueInput!]
+  disconnect: [CrewWhereUniqueInput!]
+  update: [CrewUpdateWithWhereUniqueWithoutUsersInput!]
+  upsert: [CrewUpsertWithWhereUniqueWithoutUsersInput!]
+  deleteMany: [CrewScalarWhereInput!]
+  updateMany: [CrewUpdateManyWithWhereNestedInput!]
+}
+
+input CrewUpdateManyWithWhereNestedInput {
+  where: CrewScalarWhereInput!
+  data: CrewUpdateManyDataInput!
+}
+
+input CrewUpdateWithoutUsersDataInput {
+  title: String
+  description: String
+}
+
+input CrewUpdateWithWhereUniqueWithoutUsersInput {
+  where: CrewWhereUniqueInput!
+  data: CrewUpdateWithoutUsersDataInput!
+}
+
+input CrewUpsertWithWhereUniqueWithoutUsersInput {
+  where: CrewWhereUniqueInput!
+  update: CrewUpdateWithoutUsersDataInput!
+  create: CrewCreateWithoutUsersInput!
+}
+
+input CrewWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  users_every: UserWhereInput
+  users_some: UserWhereInput
+  users_none: UserWhereInput
+  AND: [CrewWhereInput!]
+  OR: [CrewWhereInput!]
+  NOT: [CrewWhereInput!]
+}
+
+input CrewWhereUniqueInput {
+  id: ID
+}
+
 scalar Long
 
 type Mutation {
+  createCrew(data: CrewCreateInput!): Crew!
+  updateCrew(data: CrewUpdateInput!, where: CrewWhereUniqueInput!): Crew
+  updateManyCrews(data: CrewUpdateManyMutationInput!, where: CrewWhereInput): BatchPayload!
+  upsertCrew(where: CrewWhereUniqueInput!, create: CrewCreateInput!, update: CrewUpdateInput!): Crew!
+  deleteCrew(where: CrewWhereUniqueInput!): Crew
+  deleteManyCrews(where: CrewWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -40,6 +271,9 @@ type PageInfo {
 }
 
 type Query {
+  crew(where: CrewWhereUniqueInput!): Crew
+  crews(where: CrewWhereInput, orderBy: CrewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Crew]!
+  crewsConnection(where: CrewWhereInput, orderBy: CrewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CrewConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -47,6 +281,7 @@ type Query {
 }
 
 type Subscription {
+  crew(where: CrewSubscriptionWhereInput): CrewSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
@@ -58,6 +293,7 @@ type User {
   filiere: String!
   option: String!
   password: String!
+  crews(where: CrewWhereInput, orderBy: CrewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Crew!]
 }
 
 type UserConnection {
@@ -67,6 +303,22 @@ type UserConnection {
 }
 
 input UserCreateInput {
+  id: ID
+  name: String!
+  matricule: String!
+  email: String!
+  filiere: String!
+  option: String!
+  password: String!
+  crews: CrewCreateManyWithoutUsersInput
+}
+
+input UserCreateManyWithoutCrewsInput {
+  create: [UserCreateWithoutCrewsInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateWithoutCrewsInput {
   id: ID
   name: String!
   matricule: String!
@@ -108,6 +360,110 @@ type UserPreviousValues {
   password: String!
 }
 
+input UserScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  matricule: String
+  matricule_not: String
+  matricule_in: [String!]
+  matricule_not_in: [String!]
+  matricule_lt: String
+  matricule_lte: String
+  matricule_gt: String
+  matricule_gte: String
+  matricule_contains: String
+  matricule_not_contains: String
+  matricule_starts_with: String
+  matricule_not_starts_with: String
+  matricule_ends_with: String
+  matricule_not_ends_with: String
+  email: String
+  email_not: String
+  email_in: [String!]
+  email_not_in: [String!]
+  email_lt: String
+  email_lte: String
+  email_gt: String
+  email_gte: String
+  email_contains: String
+  email_not_contains: String
+  email_starts_with: String
+  email_not_starts_with: String
+  email_ends_with: String
+  email_not_ends_with: String
+  filiere: String
+  filiere_not: String
+  filiere_in: [String!]
+  filiere_not_in: [String!]
+  filiere_lt: String
+  filiere_lte: String
+  filiere_gt: String
+  filiere_gte: String
+  filiere_contains: String
+  filiere_not_contains: String
+  filiere_starts_with: String
+  filiere_not_starts_with: String
+  filiere_ends_with: String
+  filiere_not_ends_with: String
+  option: String
+  option_not: String
+  option_in: [String!]
+  option_not_in: [String!]
+  option_lt: String
+  option_lte: String
+  option_gt: String
+  option_gte: String
+  option_contains: String
+  option_not_contains: String
+  option_starts_with: String
+  option_not_starts_with: String
+  option_ends_with: String
+  option_not_ends_with: String
+  password: String
+  password_not: String
+  password_in: [String!]
+  password_not_in: [String!]
+  password_lt: String
+  password_lte: String
+  password_gt: String
+  password_gte: String
+  password_contains: String
+  password_not_contains: String
+  password_starts_with: String
+  password_not_starts_with: String
+  password_ends_with: String
+  password_not_ends_with: String
+  AND: [UserScalarWhereInput!]
+  OR: [UserScalarWhereInput!]
+  NOT: [UserScalarWhereInput!]
+}
+
 type UserSubscriptionPayload {
   mutation: MutationType!
   node: User
@@ -133,6 +489,16 @@ input UserUpdateInput {
   filiere: String
   option: String
   password: String
+  crews: CrewUpdateManyWithoutUsersInput
+}
+
+input UserUpdateManyDataInput {
+  name: String
+  matricule: String
+  email: String
+  filiere: String
+  option: String
+  password: String
 }
 
 input UserUpdateManyMutationInput {
@@ -142,6 +508,43 @@ input UserUpdateManyMutationInput {
   filiere: String
   option: String
   password: String
+}
+
+input UserUpdateManyWithoutCrewsInput {
+  create: [UserCreateWithoutCrewsInput!]
+  delete: [UserWhereUniqueInput!]
+  connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutCrewsInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutCrewsInput!]
+  deleteMany: [UserScalarWhereInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
+}
+
+input UserUpdateManyWithWhereNestedInput {
+  where: UserScalarWhereInput!
+  data: UserUpdateManyDataInput!
+}
+
+input UserUpdateWithoutCrewsDataInput {
+  name: String
+  matricule: String
+  email: String
+  filiere: String
+  option: String
+  password: String
+}
+
+input UserUpdateWithWhereUniqueWithoutCrewsInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutCrewsDataInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutCrewsInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutCrewsDataInput!
+  create: UserCreateWithoutCrewsInput!
 }
 
 input UserWhereInput {
@@ -243,6 +646,9 @@ input UserWhereInput {
   password_not_starts_with: String
   password_ends_with: String
   password_not_ends_with: String
+  crews_every: CrewWhereInput
+  crews_some: CrewWhereInput
+  crews_none: CrewWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
