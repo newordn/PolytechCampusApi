@@ -7,6 +7,10 @@ module.exports = {
   count: Int!
 }
 
+type AggregatePost {
+  count: Int!
+}
+
 type AggregateUser {
   count: Int!
 }
@@ -20,6 +24,7 @@ type Crew {
   title: String!
   description: String!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
 }
 
 type CrewConnection {
@@ -33,6 +38,7 @@ input CrewCreateInput {
   title: String!
   description: String!
   users: UserCreateManyWithoutCrewsInput
+  posts: PostCreateManyWithoutBelongToInput
 }
 
 input CrewCreateManyWithoutUsersInput {
@@ -40,10 +46,23 @@ input CrewCreateManyWithoutUsersInput {
   connect: [CrewWhereUniqueInput!]
 }
 
+input CrewCreateOneWithoutPostsInput {
+  create: CrewCreateWithoutPostsInput
+  connect: CrewWhereUniqueInput
+}
+
+input CrewCreateWithoutPostsInput {
+  id: ID
+  title: String!
+  description: String!
+  users: UserCreateManyWithoutCrewsInput
+}
+
 input CrewCreateWithoutUsersInput {
   id: ID
   title: String!
   description: String!
+  posts: PostCreateManyWithoutBelongToInput
 }
 
 type CrewEdge {
@@ -136,6 +155,7 @@ input CrewUpdateInput {
   title: String
   description: String
   users: UserUpdateManyWithoutCrewsInput
+  posts: PostUpdateManyWithoutBelongToInput
 }
 
 input CrewUpdateManyDataInput {
@@ -165,14 +185,33 @@ input CrewUpdateManyWithWhereNestedInput {
   data: CrewUpdateManyDataInput!
 }
 
+input CrewUpdateOneRequiredWithoutPostsInput {
+  create: CrewCreateWithoutPostsInput
+  update: CrewUpdateWithoutPostsDataInput
+  upsert: CrewUpsertWithoutPostsInput
+  connect: CrewWhereUniqueInput
+}
+
+input CrewUpdateWithoutPostsDataInput {
+  title: String
+  description: String
+  users: UserUpdateManyWithoutCrewsInput
+}
+
 input CrewUpdateWithoutUsersDataInput {
   title: String
   description: String
+  posts: PostUpdateManyWithoutBelongToInput
 }
 
 input CrewUpdateWithWhereUniqueWithoutUsersInput {
   where: CrewWhereUniqueInput!
   data: CrewUpdateWithoutUsersDataInput!
+}
+
+input CrewUpsertWithoutPostsInput {
+  update: CrewUpdateWithoutPostsDataInput!
+  create: CrewCreateWithoutPostsInput!
 }
 
 input CrewUpsertWithWhereUniqueWithoutUsersInput {
@@ -227,6 +266,9 @@ input CrewWhereInput {
   users_every: UserWhereInput
   users_some: UserWhereInput
   users_none: UserWhereInput
+  posts_every: PostWhereInput
+  posts_some: PostWhereInput
+  posts_none: PostWhereInput
   AND: [CrewWhereInput!]
   OR: [CrewWhereInput!]
   NOT: [CrewWhereInput!]
@@ -245,6 +287,12 @@ type Mutation {
   upsertCrew(where: CrewWhereUniqueInput!, create: CrewCreateInput!, update: CrewUpdateInput!): Crew!
   deleteCrew(where: CrewWhereUniqueInput!): Crew
   deleteManyCrews(where: CrewWhereInput): BatchPayload!
+  createPost(data: PostCreateInput!): Post!
+  updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
+  updateManyPosts(data: PostUpdateManyMutationInput!, where: PostWhereInput): BatchPayload!
+  upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
+  deletePost(where: PostWhereUniqueInput!): Post
+  deleteManyPosts(where: PostWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -270,10 +318,297 @@ type PageInfo {
   endCursor: String
 }
 
+type Post {
+  id: ID!
+  title: String!
+  description: String!
+  files: [String!]!
+  postedBy: User
+  belongTo: Crew!
+}
+
+type PostConnection {
+  pageInfo: PageInfo!
+  edges: [PostEdge]!
+  aggregate: AggregatePost!
+}
+
+input PostCreatefilesInput {
+  set: [String!]
+}
+
+input PostCreateInput {
+  id: ID
+  title: String!
+  description: String!
+  files: PostCreatefilesInput
+  postedBy: UserCreateOneWithoutPostsInput
+  belongTo: CrewCreateOneWithoutPostsInput!
+}
+
+input PostCreateManyWithoutBelongToInput {
+  create: [PostCreateWithoutBelongToInput!]
+  connect: [PostWhereUniqueInput!]
+}
+
+input PostCreateManyWithoutPostedByInput {
+  create: [PostCreateWithoutPostedByInput!]
+  connect: [PostWhereUniqueInput!]
+}
+
+input PostCreateWithoutBelongToInput {
+  id: ID
+  title: String!
+  description: String!
+  files: PostCreatefilesInput
+  postedBy: UserCreateOneWithoutPostsInput
+}
+
+input PostCreateWithoutPostedByInput {
+  id: ID
+  title: String!
+  description: String!
+  files: PostCreatefilesInput
+  belongTo: CrewCreateOneWithoutPostsInput!
+}
+
+type PostEdge {
+  node: Post!
+  cursor: String!
+}
+
+enum PostOrderByInput {
+  id_ASC
+  id_DESC
+  title_ASC
+  title_DESC
+  description_ASC
+  description_DESC
+}
+
+type PostPreviousValues {
+  id: ID!
+  title: String!
+  description: String!
+  files: [String!]!
+}
+
+input PostScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  AND: [PostScalarWhereInput!]
+  OR: [PostScalarWhereInput!]
+  NOT: [PostScalarWhereInput!]
+}
+
+type PostSubscriptionPayload {
+  mutation: MutationType!
+  node: Post
+  updatedFields: [String!]
+  previousValues: PostPreviousValues
+}
+
+input PostSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: PostWhereInput
+  AND: [PostSubscriptionWhereInput!]
+  OR: [PostSubscriptionWhereInput!]
+  NOT: [PostSubscriptionWhereInput!]
+}
+
+input PostUpdatefilesInput {
+  set: [String!]
+}
+
+input PostUpdateInput {
+  title: String
+  description: String
+  files: PostUpdatefilesInput
+  postedBy: UserUpdateOneWithoutPostsInput
+  belongTo: CrewUpdateOneRequiredWithoutPostsInput
+}
+
+input PostUpdateManyDataInput {
+  title: String
+  description: String
+  files: PostUpdatefilesInput
+}
+
+input PostUpdateManyMutationInput {
+  title: String
+  description: String
+  files: PostUpdatefilesInput
+}
+
+input PostUpdateManyWithoutBelongToInput {
+  create: [PostCreateWithoutBelongToInput!]
+  delete: [PostWhereUniqueInput!]
+  connect: [PostWhereUniqueInput!]
+  set: [PostWhereUniqueInput!]
+  disconnect: [PostWhereUniqueInput!]
+  update: [PostUpdateWithWhereUniqueWithoutBelongToInput!]
+  upsert: [PostUpsertWithWhereUniqueWithoutBelongToInput!]
+  deleteMany: [PostScalarWhereInput!]
+  updateMany: [PostUpdateManyWithWhereNestedInput!]
+}
+
+input PostUpdateManyWithoutPostedByInput {
+  create: [PostCreateWithoutPostedByInput!]
+  delete: [PostWhereUniqueInput!]
+  connect: [PostWhereUniqueInput!]
+  set: [PostWhereUniqueInput!]
+  disconnect: [PostWhereUniqueInput!]
+  update: [PostUpdateWithWhereUniqueWithoutPostedByInput!]
+  upsert: [PostUpsertWithWhereUniqueWithoutPostedByInput!]
+  deleteMany: [PostScalarWhereInput!]
+  updateMany: [PostUpdateManyWithWhereNestedInput!]
+}
+
+input PostUpdateManyWithWhereNestedInput {
+  where: PostScalarWhereInput!
+  data: PostUpdateManyDataInput!
+}
+
+input PostUpdateWithoutBelongToDataInput {
+  title: String
+  description: String
+  files: PostUpdatefilesInput
+  postedBy: UserUpdateOneWithoutPostsInput
+}
+
+input PostUpdateWithoutPostedByDataInput {
+  title: String
+  description: String
+  files: PostUpdatefilesInput
+  belongTo: CrewUpdateOneRequiredWithoutPostsInput
+}
+
+input PostUpdateWithWhereUniqueWithoutBelongToInput {
+  where: PostWhereUniqueInput!
+  data: PostUpdateWithoutBelongToDataInput!
+}
+
+input PostUpdateWithWhereUniqueWithoutPostedByInput {
+  where: PostWhereUniqueInput!
+  data: PostUpdateWithoutPostedByDataInput!
+}
+
+input PostUpsertWithWhereUniqueWithoutBelongToInput {
+  where: PostWhereUniqueInput!
+  update: PostUpdateWithoutBelongToDataInput!
+  create: PostCreateWithoutBelongToInput!
+}
+
+input PostUpsertWithWhereUniqueWithoutPostedByInput {
+  where: PostWhereUniqueInput!
+  update: PostUpdateWithoutPostedByDataInput!
+  create: PostCreateWithoutPostedByInput!
+}
+
+input PostWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  postedBy: UserWhereInput
+  belongTo: CrewWhereInput
+  AND: [PostWhereInput!]
+  OR: [PostWhereInput!]
+  NOT: [PostWhereInput!]
+}
+
+input PostWhereUniqueInput {
+  id: ID
+}
+
 type Query {
   crew(where: CrewWhereUniqueInput!): Crew
   crews(where: CrewWhereInput, orderBy: CrewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Crew]!
   crewsConnection(where: CrewWhereInput, orderBy: CrewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CrewConnection!
+  post(where: PostWhereUniqueInput!): Post
+  posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
+  postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -282,6 +617,7 @@ type Query {
 
 type Subscription {
   crew(where: CrewSubscriptionWhereInput): CrewSubscriptionPayload
+  post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
@@ -294,6 +630,7 @@ type User {
   option: String!
   password: String!
   crews(where: CrewWhereInput, orderBy: CrewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Crew!]
+  posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
 }
 
 type UserConnection {
@@ -311,11 +648,17 @@ input UserCreateInput {
   option: String!
   password: String!
   crews: CrewCreateManyWithoutUsersInput
+  posts: PostCreateManyWithoutPostedByInput
 }
 
 input UserCreateManyWithoutCrewsInput {
   create: [UserCreateWithoutCrewsInput!]
   connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateOneWithoutPostsInput {
+  create: UserCreateWithoutPostsInput
+  connect: UserWhereUniqueInput
 }
 
 input UserCreateWithoutCrewsInput {
@@ -326,6 +669,18 @@ input UserCreateWithoutCrewsInput {
   filiere: String!
   option: String!
   password: String!
+  posts: PostCreateManyWithoutPostedByInput
+}
+
+input UserCreateWithoutPostsInput {
+  id: ID
+  name: String!
+  matricule: String!
+  email: String!
+  filiere: String!
+  option: String!
+  password: String!
+  crews: CrewCreateManyWithoutUsersInput
 }
 
 type UserEdge {
@@ -490,6 +845,7 @@ input UserUpdateInput {
   option: String
   password: String
   crews: CrewUpdateManyWithoutUsersInput
+  posts: PostUpdateManyWithoutPostedByInput
 }
 
 input UserUpdateManyDataInput {
@@ -527,6 +883,15 @@ input UserUpdateManyWithWhereNestedInput {
   data: UserUpdateManyDataInput!
 }
 
+input UserUpdateOneWithoutPostsInput {
+  create: UserCreateWithoutPostsInput
+  update: UserUpdateWithoutPostsDataInput
+  upsert: UserUpsertWithoutPostsInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: UserWhereUniqueInput
+}
+
 input UserUpdateWithoutCrewsDataInput {
   name: String
   matricule: String
@@ -534,11 +899,27 @@ input UserUpdateWithoutCrewsDataInput {
   filiere: String
   option: String
   password: String
+  posts: PostUpdateManyWithoutPostedByInput
+}
+
+input UserUpdateWithoutPostsDataInput {
+  name: String
+  matricule: String
+  email: String
+  filiere: String
+  option: String
+  password: String
+  crews: CrewUpdateManyWithoutUsersInput
 }
 
 input UserUpdateWithWhereUniqueWithoutCrewsInput {
   where: UserWhereUniqueInput!
   data: UserUpdateWithoutCrewsDataInput!
+}
+
+input UserUpsertWithoutPostsInput {
+  update: UserUpdateWithoutPostsDataInput!
+  create: UserCreateWithoutPostsInput!
 }
 
 input UserUpsertWithWhereUniqueWithoutCrewsInput {
@@ -649,6 +1030,9 @@ input UserWhereInput {
   crews_every: CrewWhereInput
   crews_some: CrewWhereInput
   crews_none: CrewWhereInput
+  posts_every: PostWhereInput
+  posts_some: PostWhereInput
+  posts_none: PostWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

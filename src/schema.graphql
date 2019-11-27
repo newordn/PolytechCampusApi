@@ -2,11 +2,22 @@ type Query{
     info:String!
     users: [User!]!
     crews: [Crew!]!
+    posts: [Post!]!
 }
 type Mutation{
     logIn(matricule:String!,password:String!): AuthPayload
     signUp(name:String!,matricule:String!,email:String!,filiere:String!,option:String!,password:String!): AuthPayload
     crew(title:String!,description:String!,users:[String]): Crew
+    post(title:String!,description:String!,files:[String!]!,belongTo:String!): Post!
+}
+type Post{
+    id: ID!
+    title: String!
+    description: String!
+    files: [String!]!
+    postedBy: User!
+    belongTo: Crew!
+
 }
 type AuthPayload{
     token: String
@@ -17,6 +28,7 @@ type Crew{
     title: String!
     description:String!
     users: [User]
+    posts:[Post]
 }
 type User{
     id: ID!
@@ -27,4 +39,6 @@ type User{
     option: String!
     password:String!
     crews: [Crew]
+    posts:[Post]
 }
+

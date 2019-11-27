@@ -3,6 +3,7 @@ type Crew{
     title: String!
     description:String!
     users: [User] @relation(name:"CrewUser")
+    posts:[Post] @relation(name:"CrewPosts")
 }
 type User{
     id: ID! @id
@@ -13,4 +14,13 @@ type User{
     option: String!
     password: String!
     crews: [Crew] @relation(name:"CrewUser")
+    posts:[Post] @relation(name:"PostUser")
+}
+type Post{
+    id: ID! @id
+    title: String!
+    description: String!
+    files: [String!]! @scalarList(strategy: RELATION)
+    postedBy: User @relation(name:"PostUser")
+    belongTo: Crew! @relation(name:"CrewPosts")
 }

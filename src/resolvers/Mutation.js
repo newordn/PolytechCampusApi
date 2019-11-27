@@ -37,9 +37,18 @@ async function crew(parent,args,context,info)
      crew = await context.prisma.createCrew({...args,users:{connect: users}})
     return crew
 }
+async function post(parent,args,context,info)
+{
+    const userId = getUserId(context)
+    console.log(args)
+     post = await context.prisma.createPost({...args,files: {set:args.files},belongTo:{connect:{id:args.belongTo}},postedBy:{connect:{id:userId}}})
+    return post
+}
+
 
 module.exports={
     signUp,
     logIn,
-    crew
+    crew,
+    post
 }

@@ -8,8 +8,13 @@ async function crews(parent,args,context,info){
     const crews = await context.prisma.crews({})
     return crews
 }
+async function posts(parent,args,context,info){
+    const posts = await context.prisma.posts({})
+    return posts
+}
 module.exports={
     info,
     users,
-    crews
+    crews,
+    posts
 }
