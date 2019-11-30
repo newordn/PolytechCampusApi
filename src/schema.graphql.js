@@ -9,6 +9,7 @@ type Query{
     posts: [Post!]!
     crew(id:String!): Crew!
     post(id:String!): Post!
+    postsByCrew(crewId:String!):[Post!]!
 }
 type Mutation{
     logIn(matricule:String!,password:String!): AuthPayload

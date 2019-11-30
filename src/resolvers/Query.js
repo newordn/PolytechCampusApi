@@ -20,11 +20,15 @@ async function post(parent,args,context,info){
     const post = await context.prisma.post({id:args.id})
     return post
 }
+async function postsByCrew(parent,args,context,info){
+    const posts = await context.prisma.crew({id:args.crewId}).posts()
+    return posts
+}
 module.exports={
     info,
     users,
     crews,
     posts,
     crew,
-    post
+    postsByCrew
 }
