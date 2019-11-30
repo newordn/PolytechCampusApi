@@ -1,3 +1,7 @@
+
+const {GraphQLUpload} = require('graphql-upload')
+const typeDefs = `
+scalar Upload
 type Query{
     info:String!
     users: [User!]!
@@ -10,7 +14,7 @@ type Mutation{
     logIn(matricule:String!,password:String!): AuthPayload
     signUp(name:String!,matricule:String!,email:String!,filiere:String!,option:String!,password:String!): AuthPayload
     crew(title:String!,description:String!,users:[String]): Crew
-    post(title:String!,description:String!,files:[String!]!,belongTo:String!): Post!
+    post(title:String!,description:String!,files:[Upload!]!,belongTo:String!): Post!
 }
 type Post{
     id: ID!
@@ -43,4 +47,7 @@ type User{
     crews: [Crew]
     posts:[Post]
 }
-
+`
+module.exports ={
+    typeDefs
+}

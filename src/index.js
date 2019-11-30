@@ -5,17 +5,21 @@ const Crew = require('./resolvers/Crew')
 const Post = require('./resolvers/Post')
 const User = require('./resolvers/User')
 const {prisma} = require('./generated/prisma-client')
+const {storeUpload} = require('./helpers/upload')
+const {GraphQLUpload} = require('graphql-upload')
+const {makeExecutableSchema} = require('graphql-tools')
+const {typeDefs} = require('./schema.graphql.js')
 const resolvers = {
     Query,
     Mutation,
     Crew,
     Post,
-    User
+    User,
+    Upload: GraphQLUpload
 }
-
+const schema = makeExecutableSchema({typeDefs,resolvers})
 const server = new GraphQLServer({
-    typeDefs: './src/schema.graphql',
-    resolvers,
-    context: request=> ({...request,prisma})
+    schema,
+    context: request=> ({...request,prisma,storeUpload})
 })
 server.start(()=>console.log(`Polytech Campus GraphQl Server Started, is running on http://localhost:4000`))

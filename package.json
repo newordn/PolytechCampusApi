@@ -7,11 +7,15 @@
   "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "fs": "^0.0.1-security",
+    "graphql-upload": "^8.1.0",
     "graphql-yoga": "^1.18.3",
     "jsonwebtoken": "^8.5.1",
-    "prisma-client-lib": "^1.34.10"
+    "mkdirp": "^0.5.1",
+    "prisma-client-lib": "^1.34.10",
+    "shortid": "^2.2.15"
   },
   "scripts": {
     "start": "node src/index.js"
-}
+  }
 }
