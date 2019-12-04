@@ -30,5 +30,6 @@ module.exports={
     crews,
     posts,
     crew,
-    postsByCrew
+    post,
+     postsByCrew
 }
