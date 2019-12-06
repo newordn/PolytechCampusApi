@@ -1,4 +1,5 @@
 const {GraphQLServer} = require('graphql-yoga')
+const express = require('express')
 const Query = require('./resolvers/Query')
 const Mutation = require('./resolvers/Mutation')
 const Crew = require('./resolvers/Crew')
@@ -21,5 +22,7 @@ const schema = makeExecutableSchema({typeDefs,resolvers})
 const server = new GraphQLServer({
     schema,
     context: request=> ({...request,prisma,storeUpload})
+    
 })
+server.express.use('/uploads',express.static("uploads"))
 server.start(()=>console.log(`Polytech Campus GraphQl Server Started, is running on http://localhost:4000`))
