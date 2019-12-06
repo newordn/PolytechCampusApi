@@ -5,11 +5,11 @@ async function users(parent,args,context,info){
     return users
 }
 async function crews(parent,args,context,info){
-    const crews = await context.prisma.crews({})
+    const crews = await context.prisma.crews({orderBy:'id_DESC'})
     return crews
 }
 async function posts(parent,args,context,info){
-    const posts = await context.prisma.posts({})
+    const posts = await context.prisma.posts({orderBy:'id_DESC'})
     return posts
 }
 async function crew(parent,args,context,info){
@@ -21,7 +21,7 @@ async function post(parent,args,context,info){
     return post
 }
 async function postsByCrew(parent,args,context,info){
-    const posts = await context.prisma.crew({id:args.crewId}).posts()
+    const posts = await context.prisma.crew({id:args.crewId}).posts({orderBy:'id_DESC'})
     return posts
 }
 module.exports={
