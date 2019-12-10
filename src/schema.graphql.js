@@ -42,6 +42,7 @@ type User{
     name:String!
     matricule: String!
     email: String!
+    phone:String!
     filiere: String!
     option: String!
     password:String!

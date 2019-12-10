@@ -626,6 +626,7 @@ type User {
   name: String!
   matricule: String!
   email: String!
+  phone: String!
   filiere: String!
   option: String!
   password: String!
@@ -644,6 +645,7 @@ input UserCreateInput {
   name: String!
   matricule: String!
   email: String!
+  phone: String!
   filiere: String!
   option: String!
   password: String!
@@ -666,6 +668,7 @@ input UserCreateWithoutCrewsInput {
   name: String!
   matricule: String!
   email: String!
+  phone: String!
   filiere: String!
   option: String!
   password: String!
@@ -677,6 +680,7 @@ input UserCreateWithoutPostsInput {
   name: String!
   matricule: String!
   email: String!
+  phone: String!
   filiere: String!
   option: String!
   password: String!
@@ -697,6 +701,8 @@ enum UserOrderByInput {
   matricule_DESC
   email_ASC
   email_DESC
+  phone_ASC
+  phone_DESC
   filiere_ASC
   filiere_DESC
   option_ASC
@@ -710,6 +716,7 @@ type UserPreviousValues {
   name: String!
   matricule: String!
   email: String!
+  phone: String!
   filiere: String!
   option: String!
   password: String!
@@ -772,6 +779,20 @@ input UserScalarWhereInput {
   email_not_starts_with: String
   email_ends_with: String
   email_not_ends_with: String
+  phone: String
+  phone_not: String
+  phone_in: [String!]
+  phone_not_in: [String!]
+  phone_lt: String
+  phone_lte: String
+  phone_gt: String
+  phone_gte: String
+  phone_contains: String
+  phone_not_contains: String
+  phone_starts_with: String
+  phone_not_starts_with: String
+  phone_ends_with: String
+  phone_not_ends_with: String
   filiere: String
   filiere_not: String
   filiere_in: [String!]
@@ -841,6 +862,7 @@ input UserUpdateInput {
   name: String
   matricule: String
   email: String
+  phone: String
   filiere: String
   option: String
   password: String
@@ -852,6 +874,7 @@ input UserUpdateManyDataInput {
   name: String
   matricule: String
   email: String
+  phone: String
   filiere: String
   option: String
   password: String
@@ -861,6 +884,7 @@ input UserUpdateManyMutationInput {
   name: String
   matricule: String
   email: String
+  phone: String
   filiere: String
   option: String
   password: String
@@ -896,6 +920,7 @@ input UserUpdateWithoutCrewsDataInput {
   name: String
   matricule: String
   email: String
+  phone: String
   filiere: String
   option: String
   password: String
@@ -906,6 +931,7 @@ input UserUpdateWithoutPostsDataInput {
   name: String
   matricule: String
   email: String
+  phone: String
   filiere: String
   option: String
   password: String
@@ -985,6 +1011,20 @@ input UserWhereInput {
   email_not_starts_with: String
   email_ends_with: String
   email_not_ends_with: String
+  phone: String
+  phone_not: String
+  phone_in: [String!]
+  phone_not_in: [String!]
+  phone_lt: String
+  phone_lte: String
+  phone_gt: String
+  phone_gte: String
+  phone_contains: String
+  phone_not_contains: String
+  phone_starts_with: String
+  phone_not_starts_with: String
+  phone_ends_with: String
+  phone_not_ends_with: String
   filiere: String
   filiere_not: String
   filiere_in: [String!]
@@ -1042,6 +1082,7 @@ input UserWhereUniqueInput {
   id: ID
   matricule: String
   email: String
+  phone: String
 }
 `
       }

@@ -10,6 +10,7 @@ type User{
     name:String!
     matricule: String! @unique
     email: String! @unique
+    phone: String! @unique
     filiere: String!
     option: String!
     password: String!
