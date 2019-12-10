@@ -13,7 +13,7 @@ type Query{
 }
 type Mutation{
     logIn(matricule:String!,password:String!): AuthPayload
-    signUp(name:String!,matricule:String!,email:String!,filiere:String!,option:String!,password:String!): AuthPayload
+    signUp(name:String!,matricule:String!,email:String!,phone:String!,filiere:String!,option:String!,password:String!): AuthPayload
     crew(title:String!,description:String!,users:[String]): Crew
     post(title:String!,description:String!,files:[Upload!]!,belongTo:String!): Post!
 }
