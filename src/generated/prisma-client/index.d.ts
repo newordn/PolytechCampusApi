@@ -192,6 +192,8 @@ export type UserOrderByInput =
   | "phone_DESC"
   | "role_ASC"
   | "role_DESC"
+  | "code_ASC"
+  | "code_DESC"
   | "filiere_ASC"
   | "filiere_DESC"
   | "option_ASC"
@@ -367,6 +369,7 @@ export interface UserUpdateInput {
   email?: Maybe<String>;
   phone?: Maybe<String>;
   role?: Maybe<String>;
+  code?: Maybe<String>;
   filiere?: Maybe<String>;
   option?: Maybe<String>;
   password?: Maybe<String>;
@@ -380,6 +383,7 @@ export interface UserUpdateWithoutCrewsDataInput {
   email?: Maybe<String>;
   phone?: Maybe<String>;
   role?: Maybe<String>;
+  code?: Maybe<String>;
   filiere?: Maybe<String>;
   option?: Maybe<String>;
   password?: Maybe<String>;
@@ -571,6 +575,7 @@ export interface UserCreateWithoutCrewsInput {
   email: String;
   phone: String;
   role: String;
+  code: String;
   filiere: String;
   option: String;
   password: String;
@@ -757,6 +762,20 @@ export interface UserWhereInput {
   role_not_starts_with?: Maybe<String>;
   role_ends_with?: Maybe<String>;
   role_not_ends_with?: Maybe<String>;
+  code?: Maybe<String>;
+  code_not?: Maybe<String>;
+  code_in?: Maybe<String[] | String>;
+  code_not_in?: Maybe<String[] | String>;
+  code_lt?: Maybe<String>;
+  code_lte?: Maybe<String>;
+  code_gt?: Maybe<String>;
+  code_gte?: Maybe<String>;
+  code_contains?: Maybe<String>;
+  code_not_contains?: Maybe<String>;
+  code_starts_with?: Maybe<String>;
+  code_not_starts_with?: Maybe<String>;
+  code_ends_with?: Maybe<String>;
+  code_not_ends_with?: Maybe<String>;
   filiere?: Maybe<String>;
   filiere_not?: Maybe<String>;
   filiere_in?: Maybe<String[] | String>;
@@ -822,6 +841,7 @@ export interface UserUpdateManyMutationInput {
   email?: Maybe<String>;
   phone?: Maybe<String>;
   role?: Maybe<String>;
+  code?: Maybe<String>;
   filiere?: Maybe<String>;
   option?: Maybe<String>;
   password?: Maybe<String>;
@@ -912,6 +932,20 @@ export interface UserScalarWhereInput {
   role_not_starts_with?: Maybe<String>;
   role_ends_with?: Maybe<String>;
   role_not_ends_with?: Maybe<String>;
+  code?: Maybe<String>;
+  code_not?: Maybe<String>;
+  code_in?: Maybe<String[] | String>;
+  code_not_in?: Maybe<String[] | String>;
+  code_lt?: Maybe<String>;
+  code_lte?: Maybe<String>;
+  code_gt?: Maybe<String>;
+  code_gte?: Maybe<String>;
+  code_contains?: Maybe<String>;
+  code_not_contains?: Maybe<String>;
+  code_starts_with?: Maybe<String>;
+  code_not_starts_with?: Maybe<String>;
+  code_ends_with?: Maybe<String>;
+  code_not_ends_with?: Maybe<String>;
   filiere?: Maybe<String>;
   filiere_not?: Maybe<String>;
   filiere_in?: Maybe<String[] | String>;
@@ -981,6 +1015,7 @@ export interface UserUpdateManyDataInput {
   email?: Maybe<String>;
   phone?: Maybe<String>;
   role?: Maybe<String>;
+  code?: Maybe<String>;
   filiere?: Maybe<String>;
   option?: Maybe<String>;
   password?: Maybe<String>;
@@ -1034,6 +1069,7 @@ export interface UserCreateWithoutPostsInput {
   email: String;
   phone: String;
   role: String;
+  code: String;
   filiere: String;
   option: String;
   password: String;
@@ -1054,6 +1090,7 @@ export interface UserCreateInput {
   email: String;
   phone: String;
   role: String;
+  code: String;
   filiere: String;
   option: String;
   password: String;
@@ -1112,6 +1149,7 @@ export interface UserUpdateWithoutPostsDataInput {
   email?: Maybe<String>;
   phone?: Maybe<String>;
   role?: Maybe<String>;
+  code?: Maybe<String>;
   filiere?: Maybe<String>;
   option?: Maybe<String>;
   password?: Maybe<String>;
@@ -1166,6 +1204,7 @@ export interface UserPreviousValues {
   email: String;
   phone: String;
   role: String;
+  code: String;
   filiere: String;
   option: String;
   password: String;
@@ -1180,6 +1219,7 @@ export interface UserPreviousValuesPromise
   email: () => Promise<String>;
   phone: () => Promise<String>;
   role: () => Promise<String>;
+  code: () => Promise<String>;
   filiere: () => Promise<String>;
   option: () => Promise<String>;
   password: () => Promise<String>;
@@ -1194,6 +1234,7 @@ export interface UserPreviousValuesSubscription
   email: () => Promise<AsyncIterator<String>>;
   phone: () => Promise<AsyncIterator<String>>;
   role: () => Promise<AsyncIterator<String>>;
+  code: () => Promise<AsyncIterator<String>>;
   filiere: () => Promise<AsyncIterator<String>>;
   option: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
@@ -1264,6 +1305,7 @@ export interface User {
   email: String;
   phone: String;
   role: String;
+  code: String;
   filiere: String;
   option: String;
   password: String;
@@ -1276,6 +1318,7 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   email: () => Promise<String>;
   phone: () => Promise<String>;
   role: () => Promise<String>;
+  code: () => Promise<String>;
   filiere: () => Promise<String>;
   option: () => Promise<String>;
   password: () => Promise<String>;
@@ -1308,6 +1351,7 @@ export interface UserSubscription
   email: () => Promise<AsyncIterator<String>>;
   phone: () => Promise<AsyncIterator<String>>;
   role: () => Promise<AsyncIterator<String>>;
+  code: () => Promise<AsyncIterator<String>>;
   filiere: () => Promise<AsyncIterator<String>>;
   option: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
@@ -1340,6 +1384,7 @@ export interface UserNullablePromise
   email: () => Promise<String>;
   phone: () => Promise<String>;
   role: () => Promise<String>;
+  code: () => Promise<String>;
   filiere: () => Promise<String>;
   option: () => Promise<String>;
   password: () => Promise<String>;

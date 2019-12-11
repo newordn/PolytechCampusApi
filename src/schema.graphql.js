@@ -12,7 +12,7 @@ type Query{
     postsByCrew(crewId:String!):[Post!]!
 }
 type Mutation{
-    logIn(matricule:String!,password:String!): AuthPayload
+    logIn(matricule:String!,password:String!,code:String!): AuthPayload
     signUp(name:String!,matricule:String!,email:String!,phone:String!,filiere:String!,option:String!,password:String!): AuthPayload
     crew(title:String!,description:String!,users:[String]): Crew
     post(title:String!,description:String!,files:[Upload!]!,belongTo:String!): Post!
@@ -44,6 +44,7 @@ type User{
     email: String!
     phone:String!
     role:String!
+    code:String!
     filiere: String!
     option: String!
     password:String!

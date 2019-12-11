@@ -628,6 +628,7 @@ type User {
   email: String!
   phone: String!
   role: String!
+  code: String!
   filiere: String!
   option: String!
   password: String!
@@ -648,6 +649,7 @@ input UserCreateInput {
   email: String!
   phone: String!
   role: String!
+  code: String!
   filiere: String!
   option: String!
   password: String!
@@ -672,6 +674,7 @@ input UserCreateWithoutCrewsInput {
   email: String!
   phone: String!
   role: String!
+  code: String!
   filiere: String!
   option: String!
   password: String!
@@ -685,6 +688,7 @@ input UserCreateWithoutPostsInput {
   email: String!
   phone: String!
   role: String!
+  code: String!
   filiere: String!
   option: String!
   password: String!
@@ -709,6 +713,8 @@ enum UserOrderByInput {
   phone_DESC
   role_ASC
   role_DESC
+  code_ASC
+  code_DESC
   filiere_ASC
   filiere_DESC
   option_ASC
@@ -724,6 +730,7 @@ type UserPreviousValues {
   email: String!
   phone: String!
   role: String!
+  code: String!
   filiere: String!
   option: String!
   password: String!
@@ -814,6 +821,20 @@ input UserScalarWhereInput {
   role_not_starts_with: String
   role_ends_with: String
   role_not_ends_with: String
+  code: String
+  code_not: String
+  code_in: [String!]
+  code_not_in: [String!]
+  code_lt: String
+  code_lte: String
+  code_gt: String
+  code_gte: String
+  code_contains: String
+  code_not_contains: String
+  code_starts_with: String
+  code_not_starts_with: String
+  code_ends_with: String
+  code_not_ends_with: String
   filiere: String
   filiere_not: String
   filiere_in: [String!]
@@ -885,6 +906,7 @@ input UserUpdateInput {
   email: String
   phone: String
   role: String
+  code: String
   filiere: String
   option: String
   password: String
@@ -898,6 +920,7 @@ input UserUpdateManyDataInput {
   email: String
   phone: String
   role: String
+  code: String
   filiere: String
   option: String
   password: String
@@ -909,6 +932,7 @@ input UserUpdateManyMutationInput {
   email: String
   phone: String
   role: String
+  code: String
   filiere: String
   option: String
   password: String
@@ -946,6 +970,7 @@ input UserUpdateWithoutCrewsDataInput {
   email: String
   phone: String
   role: String
+  code: String
   filiere: String
   option: String
   password: String
@@ -958,6 +983,7 @@ input UserUpdateWithoutPostsDataInput {
   email: String
   phone: String
   role: String
+  code: String
   filiere: String
   option: String
   password: String
@@ -1065,6 +1091,20 @@ input UserWhereInput {
   role_not_starts_with: String
   role_ends_with: String
   role_not_ends_with: String
+  code: String
+  code_not: String
+  code_in: [String!]
+  code_not_in: [String!]
+  code_lt: String
+  code_lte: String
+  code_gt: String
+  code_gte: String
+  code_contains: String
+  code_not_contains: String
+  code_starts_with: String
+  code_not_starts_with: String
+  code_ends_with: String
+  code_not_ends_with: String
   filiere: String
   filiere_not: String
   filiere_in: [String!]

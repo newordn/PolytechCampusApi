@@ -2,12 +2,12 @@ const {APP_SECRET} = require('../helpers/user')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const {getUserId,ROLES} = require('../helpers/user')
-
+const uuidv3 = require('uuid/v3')
 
 async function signUp(parent,args,context,info)
 {
     const password = await bcrypt.hash(args.password,10)
-    const user = await context.prisma.createUser({...args,password,role:ROLES.USER})
+    const user = await context.prisma.createUser({...args,password,role:ROLES.USER,code:uuidv3()})
     const token = jwt.sign({userId:user.id},APP_SECRET)
     return {
         token,user
@@ -22,6 +22,11 @@ async function logIn(parent,args,context,info)
     const valid = await bcrypt.compare(args.password,user.password)
     if(!valid){
         throw new Error('Mot de passe incorrect')
+    }
+    const valid1 = user.code == args.code
+    if(!valid1)
+    {
+        throw new Error("Code de vérification incorrect, contactez l'administrateur")
     }
     const token = jwt.sign({userId: user.id},APP_SECRET)
     return {

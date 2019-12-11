@@ -12,6 +12,7 @@ type User{
     email: String! @unique
     phone: String! @unique
     role:String!
+    code:String!
     filiere: String!
     option: String!
     password: String!
