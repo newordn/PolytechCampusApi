@@ -42,7 +42,7 @@ async function post(parent,args,context,info)
     const userId = getUserId(context)
     console.log(args.files)
     let files = await Promise.all(args.files.map(async v=>await context.storeUpload(v)))
-    files = files.map(v=>`${v.path.substr(1)}`)
+    files = files.map(v=>v.path)
     console.log(files)
      post = await context.prisma.createPost({...args,files: {set:files},belongTo:{connect:{id:args.belongTo}},postedBy:{connect:{id:userId}}})
     return post
