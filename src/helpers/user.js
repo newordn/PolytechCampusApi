@@ -1,5 +1,9 @@
 const jwt = require('jsonwebtoken')
 const APP_SECRET = "POLYTECTCAMPUSAPPSECRET"
+const ROLES = {
+    USER: "ROLE_USER",
+    ADMIN:"ROLE_ADMIN"
+}
 
 function getUserId(context){
     const Authorization = context.request.get('Authorization')
@@ -12,5 +16,6 @@ function getUserId(context){
 }
 module.exports={
     getUserId,
-    APP_SECRET
+    APP_SECRET,
+    ROLES
 }

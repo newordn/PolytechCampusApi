@@ -11,6 +11,7 @@ type User{
     matricule: String! @unique
     email: String! @unique
     phone: String! @unique
+    role:String!
     filiere: String!
     option: String!
     password: String!

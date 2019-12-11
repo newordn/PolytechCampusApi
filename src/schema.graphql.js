@@ -43,6 +43,7 @@ type User{
     matricule: String!
     email: String!
     phone:String!
+    role:String!
     filiere: String!
     option: String!
     password:String!
