@@ -7,7 +7,7 @@ const uuidv1 = require('uuid/v1')
 async function signUp(parent,args,context,info)
 {
     const password = await bcrypt.hash(args.password,10)
-    const user = await context.prisma.createUser({...args,password,role:ROLES.USER,code:uuidv1()})
+    const user = await context.prisma.createUser({...args,password,role:ROLES.USER,code:uuidv1().substring(0,7)})
     const token = jwt.sign({userId:user.id},APP_SECRET)
     return {
         token,user
@@ -23,7 +23,7 @@ async function logIn(parent,args,context,info)
     if(!valid){
         throw new Error('Mot de passe incorrect')
     }
-    const valid1 = user.code == args.code
+    const valid1 = (user.code === args.code)
     if(!valid1)
     {
         throw new Error("Code de vérification incorrect, contactez l'administrateur")
