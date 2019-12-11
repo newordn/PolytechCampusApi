@@ -2,12 +2,12 @@ const {APP_SECRET} = require('../helpers/user')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const {getUserId,ROLES} = require('../helpers/user')
-const uuidv3 = require('uuid/v3')
+const uuidv1 = require('uuid/v1')
 
 async function signUp(parent,args,context,info)
 {
     const password = await bcrypt.hash(args.password,10)
-    const user = await context.prisma.createUser({...args,password,role:ROLES.USER,code:uuidv3()})
+    const user = await context.prisma.createUser({...args,password,role:ROLES.USER,code:uuidv1()})
     const token = jwt.sign({userId:user.id},APP_SECRET)
     return {
         token,user
