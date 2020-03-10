@@ -21,7 +21,7 @@ const storeUpload = async upload => {
     console.log(filename)
     const id = shortid.generate()
     let docId=""
-    let path = `https://drive.google.com/u/3/uc?id=${docId}&export=download`
+    let path = `https://drive.google.com/uc?export=download&id=${docId}`
   
     // Store the file in google
     try{
@@ -38,7 +38,7 @@ const storeUpload = async upload => {
       }
     })
     docId= res.data.id
-    path = `https://drive.google.com/u/3/uc?id=${docId}&export=download`
+    path = `https://drive.google.com/uc?export=download&id=${docId}`
     console.log("success uploading",id)
   }
   catch(e){
