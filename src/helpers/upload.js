@@ -38,7 +38,7 @@ const storeUpload = async upload => {
       }
     })
     docId= res.data.id
-    path = `https://drive.google.com/uc?export=view&id=${docId}`
+    path = `https://drive.google.com/u/3/uc?id=${docId}&export=download`
     console.log("success uploading",id)
   }
   catch(e){
