@@ -278,6 +278,8 @@ input CrewWhereUniqueInput {
   id: ID
 }
 
+scalar DateTime
+
 scalar Long
 
 type Mutation {
@@ -325,6 +327,7 @@ type Post {
   files: [String!]!
   postedBy: User
   belongTo: Crew!
+  creationDate: DateTime!
 }
 
 type PostConnection {
@@ -384,6 +387,8 @@ enum PostOrderByInput {
   title_DESC
   description_ASC
   description_DESC
+  creationDate_ASC
+  creationDate_DESC
 }
 
 type PostPreviousValues {
@@ -391,6 +396,7 @@ type PostPreviousValues {
   title: String!
   description: String!
   files: [String!]!
+  creationDate: DateTime!
 }
 
 input PostScalarWhereInput {
@@ -436,6 +442,14 @@ input PostScalarWhereInput {
   description_not_starts_with: String
   description_ends_with: String
   description_not_ends_with: String
+  creationDate: DateTime
+  creationDate_not: DateTime
+  creationDate_in: [DateTime!]
+  creationDate_not_in: [DateTime!]
+  creationDate_lt: DateTime
+  creationDate_lte: DateTime
+  creationDate_gt: DateTime
+  creationDate_gte: DateTime
   AND: [PostScalarWhereInput!]
   OR: [PostScalarWhereInput!]
   NOT: [PostScalarWhereInput!]
@@ -593,6 +607,14 @@ input PostWhereInput {
   description_not_ends_with: String
   postedBy: UserWhereInput
   belongTo: CrewWhereInput
+  creationDate: DateTime
+  creationDate_not: DateTime
+  creationDate_in: [DateTime!]
+  creationDate_not_in: [DateTime!]
+  creationDate_lt: DateTime
+  creationDate_lte: DateTime
+  creationDate_gt: DateTime
+  creationDate_gte: DateTime
   AND: [PostWhereInput!]
   OR: [PostWhereInput!]
   NOT: [PostWhereInput!]

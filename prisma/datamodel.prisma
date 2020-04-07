@@ -26,4 +26,5 @@ type Post{
     files: [String!]! @scalarList(strategy: RELATION)
     postedBy: User @relation(name:"PostUser")
     belongTo: Crew! @relation(name:"CrewPosts")
+    creationDate: DateTime! @createdAt
 }

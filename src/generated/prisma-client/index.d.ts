@@ -215,7 +215,9 @@ export type PostOrderByInput =
   | "title_ASC"
   | "title_DESC"
   | "description_ASC"
-  | "description_DESC";
+  | "description_DESC"
+  | "creationDate_ASC"
+  | "creationDate_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
@@ -280,182 +282,23 @@ export interface PostWhereInput {
   description_not_ends_with?: Maybe<String>;
   postedBy?: Maybe<UserWhereInput>;
   belongTo?: Maybe<CrewWhereInput>;
+  creationDate?: Maybe<DateTimeInput>;
+  creationDate_not?: Maybe<DateTimeInput>;
+  creationDate_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  creationDate_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  creationDate_lt?: Maybe<DateTimeInput>;
+  creationDate_lte?: Maybe<DateTimeInput>;
+  creationDate_gt?: Maybe<DateTimeInput>;
+  creationDate_gte?: Maybe<DateTimeInput>;
   AND?: Maybe<PostWhereInput[] | PostWhereInput>;
   OR?: Maybe<PostWhereInput[] | PostWhereInput>;
   NOT?: Maybe<PostWhereInput[] | PostWhereInput>;
-}
-
-export interface CrewCreateManyWithoutUsersInput {
-  create?: Maybe<CrewCreateWithoutUsersInput[] | CrewCreateWithoutUsersInput>;
-  connect?: Maybe<CrewWhereUniqueInput[] | CrewWhereUniqueInput>;
-}
-
-export interface CrewUpsertWithWhereUniqueWithoutUsersInput {
-  where: CrewWhereUniqueInput;
-  update: CrewUpdateWithoutUsersDataInput;
-  create: CrewCreateWithoutUsersInput;
-}
-
-export interface CrewCreateWithoutUsersInput {
-  id?: Maybe<ID_Input>;
-  title: String;
-  description: String;
-  posts?: Maybe<PostCreateManyWithoutBelongToInput>;
 }
 
 export interface CrewUpdateWithoutPostsDataInput {
   title?: Maybe<String>;
   description?: Maybe<String>;
   users?: Maybe<UserUpdateManyWithoutCrewsInput>;
-}
-
-export interface CrewUpdateInput {
-  title?: Maybe<String>;
-  description?: Maybe<String>;
-  users?: Maybe<UserUpdateManyWithoutCrewsInput>;
-  posts?: Maybe<PostUpdateManyWithoutBelongToInput>;
-}
-
-export interface UserSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<UserWhereInput>;
-  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-}
-
-export interface UserUpdateManyWithoutCrewsInput {
-  create?: Maybe<UserCreateWithoutCrewsInput[] | UserCreateWithoutCrewsInput>;
-  delete?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  set?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  disconnect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  update?: Maybe<
-    | UserUpdateWithWhereUniqueWithoutCrewsInput[]
-    | UserUpdateWithWhereUniqueWithoutCrewsInput
-  >;
-  upsert?: Maybe<
-    | UserUpsertWithWhereUniqueWithoutCrewsInput[]
-    | UserUpsertWithWhereUniqueWithoutCrewsInput
-  >;
-  deleteMany?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
-  updateMany?: Maybe<
-    UserUpdateManyWithWhereNestedInput[] | UserUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface CrewSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<CrewWhereInput>;
-  AND?: Maybe<CrewSubscriptionWhereInput[] | CrewSubscriptionWhereInput>;
-  OR?: Maybe<CrewSubscriptionWhereInput[] | CrewSubscriptionWhereInput>;
-  NOT?: Maybe<CrewSubscriptionWhereInput[] | CrewSubscriptionWhereInput>;
-}
-
-export interface UserUpdateWithWhereUniqueWithoutCrewsInput {
-  where: UserWhereUniqueInput;
-  data: UserUpdateWithoutCrewsDataInput;
-}
-
-export interface UserUpdateInput {
-  name?: Maybe<String>;
-  matricule?: Maybe<String>;
-  email?: Maybe<String>;
-  phone?: Maybe<String>;
-  role?: Maybe<String>;
-  code?: Maybe<String>;
-  filiere?: Maybe<String>;
-  option?: Maybe<String>;
-  password?: Maybe<String>;
-  crews?: Maybe<CrewUpdateManyWithoutUsersInput>;
-  posts?: Maybe<PostUpdateManyWithoutPostedByInput>;
-}
-
-export interface UserUpdateWithoutCrewsDataInput {
-  name?: Maybe<String>;
-  matricule?: Maybe<String>;
-  email?: Maybe<String>;
-  phone?: Maybe<String>;
-  role?: Maybe<String>;
-  code?: Maybe<String>;
-  filiere?: Maybe<String>;
-  option?: Maybe<String>;
-  password?: Maybe<String>;
-  posts?: Maybe<PostUpdateManyWithoutPostedByInput>;
-}
-
-export interface PostUpdateManyMutationInput {
-  title?: Maybe<String>;
-  description?: Maybe<String>;
-  files?: Maybe<PostUpdatefilesInput>;
-}
-
-export interface PostUpdateManyWithoutPostedByInput {
-  create?: Maybe<
-    PostCreateWithoutPostedByInput[] | PostCreateWithoutPostedByInput
-  >;
-  delete?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
-  connect?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
-  set?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
-  disconnect?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
-  update?: Maybe<
-    | PostUpdateWithWhereUniqueWithoutPostedByInput[]
-    | PostUpdateWithWhereUniqueWithoutPostedByInput
-  >;
-  upsert?: Maybe<
-    | PostUpsertWithWhereUniqueWithoutPostedByInput[]
-    | PostUpsertWithWhereUniqueWithoutPostedByInput
-  >;
-  deleteMany?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
-  updateMany?: Maybe<
-    PostUpdateManyWithWhereNestedInput[] | PostUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface PostUpdateInput {
-  title?: Maybe<String>;
-  description?: Maybe<String>;
-  files?: Maybe<PostUpdatefilesInput>;
-  postedBy?: Maybe<UserUpdateOneWithoutPostsInput>;
-  belongTo?: Maybe<CrewUpdateOneRequiredWithoutPostsInput>;
-}
-
-export interface CrewUpdateManyWithWhereNestedInput {
-  where: CrewScalarWhereInput;
-  data: CrewUpdateManyDataInput;
-}
-
-export interface CrewUpdateManyMutationInput {
-  title?: Maybe<String>;
-  description?: Maybe<String>;
-}
-
-export interface PostUpdateWithoutPostedByDataInput {
-  title?: Maybe<String>;
-  description?: Maybe<String>;
-  files?: Maybe<PostUpdatefilesInput>;
-  belongTo?: Maybe<CrewUpdateOneRequiredWithoutPostsInput>;
-}
-
-export interface PostUpsertWithWhereUniqueWithoutBelongToInput {
-  where: PostWhereUniqueInput;
-  update: PostUpdateWithoutBelongToDataInput;
-  create: PostCreateWithoutBelongToInput;
-}
-
-export interface PostUpdatefilesInput {
-  set?: Maybe<String[] | String>;
-}
-
-export interface CrewUpdateManyDataInput {
-  title?: Maybe<String>;
-  description?: Maybe<String>;
 }
 
 export interface CrewWhereInput {
@@ -512,12 +355,178 @@ export interface CrewWhereInput {
   NOT?: Maybe<CrewWhereInput[] | CrewWhereInput>;
 }
 
-export interface CrewCreateInput {
+export interface CrewCreateManyWithoutUsersInput {
+  create?: Maybe<CrewCreateWithoutUsersInput[] | CrewCreateWithoutUsersInput>;
+  connect?: Maybe<CrewWhereUniqueInput[] | CrewWhereUniqueInput>;
+}
+
+export interface CrewUpdateWithoutUsersDataInput {
+  title?: Maybe<String>;
+  description?: Maybe<String>;
+  posts?: Maybe<PostUpdateManyWithoutBelongToInput>;
+}
+
+export interface CrewCreateWithoutUsersInput {
   id?: Maybe<ID_Input>;
   title: String;
   description: String;
-  users?: Maybe<UserCreateManyWithoutCrewsInput>;
   posts?: Maybe<PostCreateManyWithoutBelongToInput>;
+}
+
+export interface CrewUpsertWithoutPostsInput {
+  update: CrewUpdateWithoutPostsDataInput;
+  create: CrewCreateWithoutPostsInput;
+}
+
+export interface CrewUpdateInput {
+  title?: Maybe<String>;
+  description?: Maybe<String>;
+  users?: Maybe<UserUpdateManyWithoutCrewsInput>;
+  posts?: Maybe<PostUpdateManyWithoutBelongToInput>;
+}
+
+export interface PostSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<PostWhereInput>;
+  AND?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
+  OR?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
+  NOT?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
+}
+
+export interface UserUpdateManyWithoutCrewsInput {
+  create?: Maybe<UserCreateWithoutCrewsInput[] | UserCreateWithoutCrewsInput>;
+  delete?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  set?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  disconnect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  update?: Maybe<
+    | UserUpdateWithWhereUniqueWithoutCrewsInput[]
+    | UserUpdateWithWhereUniqueWithoutCrewsInput
+  >;
+  upsert?: Maybe<
+    | UserUpsertWithWhereUniqueWithoutCrewsInput[]
+    | UserUpsertWithWhereUniqueWithoutCrewsInput
+  >;
+  deleteMany?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
+  updateMany?: Maybe<
+    UserUpdateManyWithWhereNestedInput[] | UserUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface UserUpdateManyMutationInput {
+  name?: Maybe<String>;
+  matricule?: Maybe<String>;
+  email?: Maybe<String>;
+  phone?: Maybe<String>;
+  role?: Maybe<String>;
+  code?: Maybe<String>;
+  filiere?: Maybe<String>;
+  option?: Maybe<String>;
+  password?: Maybe<String>;
+}
+
+export interface UserUpdateWithWhereUniqueWithoutCrewsInput {
+  where: UserWhereUniqueInput;
+  data: UserUpdateWithoutCrewsDataInput;
+}
+
+export interface UserCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  matricule: String;
+  email: String;
+  phone: String;
+  role: String;
+  code: String;
+  filiere: String;
+  option: String;
+  password: String;
+  crews?: Maybe<CrewCreateManyWithoutUsersInput>;
+  posts?: Maybe<PostCreateManyWithoutPostedByInput>;
+}
+
+export interface UserUpdateWithoutCrewsDataInput {
+  name?: Maybe<String>;
+  matricule?: Maybe<String>;
+  email?: Maybe<String>;
+  phone?: Maybe<String>;
+  role?: Maybe<String>;
+  code?: Maybe<String>;
+  filiere?: Maybe<String>;
+  option?: Maybe<String>;
+  password?: Maybe<String>;
+  posts?: Maybe<PostUpdateManyWithoutPostedByInput>;
+}
+
+export type PostWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface PostUpdateManyWithoutPostedByInput {
+  create?: Maybe<
+    PostCreateWithoutPostedByInput[] | PostCreateWithoutPostedByInput
+  >;
+  delete?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
+  connect?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
+  set?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
+  disconnect?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
+  update?: Maybe<
+    | PostUpdateWithWhereUniqueWithoutPostedByInput[]
+    | PostUpdateWithWhereUniqueWithoutPostedByInput
+  >;
+  upsert?: Maybe<
+    | PostUpsertWithWhereUniqueWithoutPostedByInput[]
+    | PostUpsertWithWhereUniqueWithoutPostedByInput
+  >;
+  deleteMany?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
+  updateMany?: Maybe<
+    PostUpdateManyWithWhereNestedInput[] | PostUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface PostCreateInput {
+  id?: Maybe<ID_Input>;
+  title: String;
+  description: String;
+  files?: Maybe<PostCreatefilesInput>;
+  postedBy?: Maybe<UserCreateOneWithoutPostsInput>;
+  belongTo: CrewCreateOneWithoutPostsInput;
+}
+
+export interface CrewUpdateManyWithWhereNestedInput {
+  where: CrewScalarWhereInput;
+  data: CrewUpdateManyDataInput;
+}
+
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  matricule?: Maybe<String>;
+  email?: Maybe<String>;
+  phone?: Maybe<String>;
+}>;
+
+export interface PostUpdateWithoutPostedByDataInput {
+  title?: Maybe<String>;
+  description?: Maybe<String>;
+  files?: Maybe<PostUpdatefilesInput>;
+  belongTo?: Maybe<CrewUpdateOneRequiredWithoutPostsInput>;
+}
+
+export interface UserUpsertWithoutPostsInput {
+  update: UserUpdateWithoutPostsDataInput;
+  create: UserCreateWithoutPostsInput;
+}
+
+export interface PostUpdatefilesInput {
+  set?: Maybe<String[] | String>;
+}
+
+export interface UserCreateManyWithoutCrewsInput {
+  create?: Maybe<UserCreateWithoutCrewsInput[] | UserCreateWithoutCrewsInput>;
+  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
 }
 
 export interface CrewScalarWhereInput {
@@ -568,113 +577,21 @@ export interface CrewScalarWhereInput {
   NOT?: Maybe<CrewScalarWhereInput[] | CrewScalarWhereInput>;
 }
 
-export interface UserCreateWithoutCrewsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  matricule: String;
-  email: String;
-  phone: String;
-  role: String;
-  code: String;
-  filiere: String;
-  option: String;
-  password: String;
-  posts?: Maybe<PostCreateManyWithoutPostedByInput>;
-}
-
-export interface CrewUpsertWithoutPostsInput {
-  update: CrewUpdateWithoutPostsDataInput;
-  create: CrewCreateWithoutPostsInput;
-}
-
-export interface PostCreateWithoutPostedByInput {
-  id?: Maybe<ID_Input>;
-  title: String;
-  description: String;
-  files?: Maybe<PostCreatefilesInput>;
-  belongTo: CrewCreateOneWithoutPostsInput;
-}
-
-export interface PostUpsertWithWhereUniqueWithoutPostedByInput {
-  where: PostWhereUniqueInput;
-  update: PostUpdateWithoutPostedByDataInput;
-  create: PostCreateWithoutPostedByInput;
-}
-
-export interface CrewCreateOneWithoutPostsInput {
-  create?: Maybe<CrewCreateWithoutPostsInput>;
-  connect?: Maybe<CrewWhereUniqueInput>;
-}
-
-export interface PostScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  title?: Maybe<String>;
-  title_not?: Maybe<String>;
-  title_in?: Maybe<String[] | String>;
-  title_not_in?: Maybe<String[] | String>;
-  title_lt?: Maybe<String>;
-  title_lte?: Maybe<String>;
-  title_gt?: Maybe<String>;
-  title_gte?: Maybe<String>;
-  title_contains?: Maybe<String>;
-  title_not_contains?: Maybe<String>;
-  title_starts_with?: Maybe<String>;
-  title_not_starts_with?: Maybe<String>;
-  title_ends_with?: Maybe<String>;
-  title_not_ends_with?: Maybe<String>;
-  description?: Maybe<String>;
-  description_not?: Maybe<String>;
-  description_in?: Maybe<String[] | String>;
-  description_not_in?: Maybe<String[] | String>;
-  description_lt?: Maybe<String>;
-  description_lte?: Maybe<String>;
-  description_gt?: Maybe<String>;
-  description_gte?: Maybe<String>;
-  description_contains?: Maybe<String>;
-  description_not_contains?: Maybe<String>;
-  description_starts_with?: Maybe<String>;
-  description_not_starts_with?: Maybe<String>;
-  description_ends_with?: Maybe<String>;
-  description_not_ends_with?: Maybe<String>;
-  AND?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
-  OR?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
-  NOT?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
-}
-
-export interface PostCreateManyWithoutBelongToInput {
+export interface PostCreateManyWithoutPostedByInput {
   create?: Maybe<
-    PostCreateWithoutBelongToInput[] | PostCreateWithoutBelongToInput
+    PostCreateWithoutPostedByInput[] | PostCreateWithoutPostedByInput
   >;
   connect?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
 }
 
-export interface PostUpdateManyWithWhereNestedInput {
-  where: PostScalarWhereInput;
-  data: PostUpdateManyDataInput;
+export interface CrewUpsertWithWhereUniqueWithoutUsersInput {
+  where: CrewWhereUniqueInput;
+  update: CrewUpdateWithoutUsersDataInput;
+  create: CrewCreateWithoutUsersInput;
 }
 
-export interface UserCreateOneWithoutPostsInput {
-  create?: Maybe<UserCreateWithoutPostsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface PostUpdateManyDataInput {
-  title?: Maybe<String>;
-  description?: Maybe<String>;
-  files?: Maybe<PostUpdatefilesInput>;
+export interface PostCreatefilesInput {
+  set?: Maybe<String[] | String>;
 }
 
 export interface UserWhereInput {
@@ -829,22 +746,134 @@ export interface UserWhereInput {
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
 
+export interface CrewCreateWithoutPostsInput {
+  id?: Maybe<ID_Input>;
+  title: String;
+  description: String;
+  users?: Maybe<UserCreateManyWithoutCrewsInput>;
+}
+
+export interface PostUpsertWithWhereUniqueWithoutPostedByInput {
+  where: PostWhereUniqueInput;
+  update: PostUpdateWithoutPostedByDataInput;
+  create: PostCreateWithoutPostedByInput;
+}
+
+export interface PostCreateWithoutBelongToInput {
+  id?: Maybe<ID_Input>;
+  title: String;
+  description: String;
+  files?: Maybe<PostCreatefilesInput>;
+  postedBy?: Maybe<UserCreateOneWithoutPostsInput>;
+}
+
+export interface PostScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
+  description?: Maybe<String>;
+  description_not?: Maybe<String>;
+  description_in?: Maybe<String[] | String>;
+  description_not_in?: Maybe<String[] | String>;
+  description_lt?: Maybe<String>;
+  description_lte?: Maybe<String>;
+  description_gt?: Maybe<String>;
+  description_gte?: Maybe<String>;
+  description_contains?: Maybe<String>;
+  description_not_contains?: Maybe<String>;
+  description_starts_with?: Maybe<String>;
+  description_not_starts_with?: Maybe<String>;
+  description_ends_with?: Maybe<String>;
+  description_not_ends_with?: Maybe<String>;
+  creationDate?: Maybe<DateTimeInput>;
+  creationDate_not?: Maybe<DateTimeInput>;
+  creationDate_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  creationDate_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  creationDate_lt?: Maybe<DateTimeInput>;
+  creationDate_lte?: Maybe<DateTimeInput>;
+  creationDate_gt?: Maybe<DateTimeInput>;
+  creationDate_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
+  OR?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
+  NOT?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
+}
+
+export interface UserCreateWithoutPostsInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  matricule: String;
+  email: String;
+  phone: String;
+  role: String;
+  code: String;
+  filiere: String;
+  option: String;
+  password: String;
+  crews?: Maybe<CrewCreateManyWithoutUsersInput>;
+}
+
+export interface PostUpdateManyWithWhereNestedInput {
+  where: PostScalarWhereInput;
+  data: PostUpdateManyDataInput;
+}
+
+export interface CrewSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<CrewWhereInput>;
+  AND?: Maybe<CrewSubscriptionWhereInput[] | CrewSubscriptionWhereInput>;
+  OR?: Maybe<CrewSubscriptionWhereInput[] | CrewSubscriptionWhereInput>;
+  NOT?: Maybe<CrewSubscriptionWhereInput[] | CrewSubscriptionWhereInput>;
+}
+
+export interface PostUpdateManyDataInput {
+  title?: Maybe<String>;
+  description?: Maybe<String>;
+  files?: Maybe<PostUpdatefilesInput>;
+}
+
+export interface PostUpdateManyMutationInput {
+  title?: Maybe<String>;
+  description?: Maybe<String>;
+  files?: Maybe<PostUpdatefilesInput>;
+}
+
 export interface UserUpsertWithWhereUniqueWithoutCrewsInput {
   where: UserWhereUniqueInput;
   update: UserUpdateWithoutCrewsDataInput;
   create: UserCreateWithoutCrewsInput;
 }
 
-export interface UserUpdateManyMutationInput {
-  name?: Maybe<String>;
-  matricule?: Maybe<String>;
-  email?: Maybe<String>;
-  phone?: Maybe<String>;
-  role?: Maybe<String>;
-  code?: Maybe<String>;
-  filiere?: Maybe<String>;
-  option?: Maybe<String>;
-  password?: Maybe<String>;
+export interface CrewUpdateManyMutationInput {
+  title?: Maybe<String>;
+  description?: Maybe<String>;
 }
 
 export interface UserScalarWhereInput {
@@ -993,21 +1022,29 @@ export interface UserScalarWhereInput {
   NOT?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
 }
 
-export type PostWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
+export interface CrewUpdateManyDataInput {
+  title?: Maybe<String>;
+  description?: Maybe<String>;
+}
 
 export interface UserUpdateManyWithWhereNestedInput {
   where: UserScalarWhereInput;
   data: UserUpdateManyDataInput;
 }
 
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  matricule?: Maybe<String>;
-  email?: Maybe<String>;
-  phone?: Maybe<String>;
-}>;
+export interface UserCreateWithoutCrewsInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  matricule: String;
+  email: String;
+  phone: String;
+  role: String;
+  code: String;
+  filiere: String;
+  option: String;
+  password: String;
+  posts?: Maybe<PostCreateManyWithoutPostedByInput>;
+}
 
 export interface UserUpdateManyDataInput {
   name?: Maybe<String>;
@@ -1021,11 +1058,9 @@ export interface UserUpdateManyDataInput {
   password?: Maybe<String>;
 }
 
-export interface PostCreateManyWithoutPostedByInput {
-  create?: Maybe<
-    PostCreateWithoutPostedByInput[] | PostCreateWithoutPostedByInput
-  >;
-  connect?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
+export interface CrewCreateOneWithoutPostsInput {
+  create?: Maybe<CrewCreateWithoutPostsInput>;
+  connect?: Maybe<CrewWhereUniqueInput>;
 }
 
 export interface PostUpdateManyWithoutBelongToInput {
@@ -1050,11 +1085,9 @@ export interface PostUpdateManyWithoutBelongToInput {
   >;
 }
 
-export interface CrewCreateWithoutPostsInput {
-  id?: Maybe<ID_Input>;
-  title: String;
-  description: String;
-  users?: Maybe<UserCreateManyWithoutCrewsInput>;
+export interface UserCreateOneWithoutPostsInput {
+  create?: Maybe<UserCreateWithoutPostsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
 }
 
 export interface PostUpdateWithWhereUniqueWithoutBelongToInput {
@@ -1062,18 +1095,18 @@ export interface PostUpdateWithWhereUniqueWithoutBelongToInput {
   data: PostUpdateWithoutBelongToDataInput;
 }
 
-export interface UserCreateWithoutPostsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  matricule: String;
-  email: String;
-  phone: String;
-  role: String;
-  code: String;
-  filiere: String;
-  option: String;
-  password: String;
-  crews?: Maybe<CrewCreateManyWithoutUsersInput>;
+export interface UserUpdateInput {
+  name?: Maybe<String>;
+  matricule?: Maybe<String>;
+  email?: Maybe<String>;
+  phone?: Maybe<String>;
+  role?: Maybe<String>;
+  code?: Maybe<String>;
+  filiere?: Maybe<String>;
+  option?: Maybe<String>;
+  password?: Maybe<String>;
+  crews?: Maybe<CrewUpdateManyWithoutUsersInput>;
+  posts?: Maybe<PostUpdateManyWithoutPostedByInput>;
 }
 
 export interface PostUpdateWithoutBelongToDataInput {
@@ -1083,39 +1116,10 @@ export interface PostUpdateWithoutBelongToDataInput {
   postedBy?: Maybe<UserUpdateOneWithoutPostsInput>;
 }
 
-export interface UserCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  matricule: String;
-  email: String;
-  phone: String;
-  role: String;
-  code: String;
-  filiere: String;
-  option: String;
-  password: String;
-  crews?: Maybe<CrewCreateManyWithoutUsersInput>;
-  posts?: Maybe<PostCreateManyWithoutPostedByInput>;
-}
-
-export interface UserUpdateOneWithoutPostsInput {
-  create?: Maybe<UserCreateWithoutPostsInput>;
-  update?: Maybe<UserUpdateWithoutPostsDataInput>;
-  upsert?: Maybe<UserUpsertWithoutPostsInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserUpsertWithoutPostsInput {
-  update: UserUpdateWithoutPostsDataInput;
-  create: UserCreateWithoutPostsInput;
-}
-
-export interface CrewUpdateWithoutUsersDataInput {
-  title?: Maybe<String>;
-  description?: Maybe<String>;
-  posts?: Maybe<PostUpdateManyWithoutBelongToInput>;
+export interface PostUpsertWithWhereUniqueWithoutBelongToInput {
+  where: PostWhereUniqueInput;
+  update: PostUpdateWithoutBelongToDataInput;
+  create: PostCreateWithoutBelongToInput;
 }
 
 export interface CrewUpdateWithWhereUniqueWithoutUsersInput {
@@ -1156,41 +1160,55 @@ export interface UserUpdateWithoutPostsDataInput {
   crews?: Maybe<CrewUpdateManyWithoutUsersInput>;
 }
 
-export interface UserCreateManyWithoutCrewsInput {
-  create?: Maybe<UserCreateWithoutCrewsInput[] | UserCreateWithoutCrewsInput>;
-  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+export interface UserUpdateOneWithoutPostsInput {
+  create?: Maybe<UserCreateWithoutPostsInput>;
+  update?: Maybe<UserUpdateWithoutPostsDataInput>;
+  upsert?: Maybe<UserUpsertWithoutPostsInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface PostCreateInput {
+export interface CrewCreateInput {
   id?: Maybe<ID_Input>;
   title: String;
   description: String;
-  files?: Maybe<PostCreatefilesInput>;
-  postedBy?: Maybe<UserCreateOneWithoutPostsInput>;
-  belongTo: CrewCreateOneWithoutPostsInput;
+  users?: Maybe<UserCreateManyWithoutCrewsInput>;
+  posts?: Maybe<PostCreateManyWithoutBelongToInput>;
 }
 
-export interface PostSubscriptionWhereInput {
+export interface PostUpdateInput {
+  title?: Maybe<String>;
+  description?: Maybe<String>;
+  files?: Maybe<PostUpdatefilesInput>;
+  postedBy?: Maybe<UserUpdateOneWithoutPostsInput>;
+  belongTo?: Maybe<CrewUpdateOneRequiredWithoutPostsInput>;
+}
+
+export interface UserSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
   updatedFields_contains_every?: Maybe<String[] | String>;
   updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<PostWhereInput>;
-  AND?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
-  OR?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
-  NOT?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
+  node?: Maybe<UserWhereInput>;
+  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
 }
 
-export interface PostCreateWithoutBelongToInput {
+export interface PostCreateManyWithoutBelongToInput {
+  create?: Maybe<
+    PostCreateWithoutBelongToInput[] | PostCreateWithoutBelongToInput
+  >;
+  connect?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
+}
+
+export interface PostCreateWithoutPostedByInput {
   id?: Maybe<ID_Input>;
   title: String;
   description: String;
   files?: Maybe<PostCreatefilesInput>;
-  postedBy?: Maybe<UserCreateOneWithoutPostsInput>;
-}
-
-export interface PostCreatefilesInput {
-  set?: Maybe<String[] | String>;
+  belongTo: CrewCreateOneWithoutPostsInput;
 }
 
 export interface NodeNode {
@@ -1238,47 +1256,6 @@ export interface UserPreviousValuesSubscription
   filiere: () => Promise<AsyncIterator<String>>;
   option: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateCrew {
-  count: Int;
-}
-
-export interface AggregateCrewPromise
-  extends Promise<AggregateCrew>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateCrewSubscription
-  extends Promise<AsyncIterator<AggregateCrew>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface PostSubscriptionPayload {
-  mutation: MutationType;
-  node: Post;
-  updatedFields: String[];
-  previousValues: PostPreviousValues;
-}
-
-export interface PostSubscriptionPayloadPromise
-  extends Promise<PostSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = PostPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = PostPreviousValuesPromise>() => T;
-}
-
-export interface PostSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<PostSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = PostSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = PostPreviousValuesSubscription>() => T;
 }
 
 export interface CrewEdge {
@@ -1413,6 +1390,7 @@ export interface PostPreviousValues {
   title: String;
   description: String;
   files: String[];
+  creationDate: DateTimeOutput;
 }
 
 export interface PostPreviousValuesPromise
@@ -1422,6 +1400,7 @@ export interface PostPreviousValuesPromise
   title: () => Promise<String>;
   description: () => Promise<String>;
   files: () => Promise<String[]>;
+  creationDate: () => Promise<DateTimeOutput>;
 }
 
 export interface PostPreviousValuesSubscription
@@ -1431,23 +1410,69 @@ export interface PostPreviousValuesSubscription
   title: () => Promise<AsyncIterator<String>>;
   description: () => Promise<AsyncIterator<String>>;
   files: () => Promise<AsyncIterator<String[]>>;
+  creationDate: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
-export interface UserEdge {
-  node: User;
-  cursor: String;
+export interface PostSubscriptionPayload {
+  mutation: MutationType;
+  node: Post;
+  updatedFields: String[];
+  previousValues: PostPreviousValues;
 }
 
-export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
-  node: <T = UserPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface UserEdgeSubscription
-  extends Promise<AsyncIterator<UserEdge>>,
+export interface PostSubscriptionPayloadPromise
+  extends Promise<PostSubscriptionPayload>,
     Fragmentable {
-  node: <T = UserSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  mutation: () => Promise<MutationType>;
+  node: <T = PostPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = PostPreviousValuesPromise>() => T;
+}
+
+export interface PostSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<PostSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = PostSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = PostPreviousValuesSubscription>() => T;
+}
+
+export interface AggregateUser {
+  count: Int;
+}
+
+export interface AggregateUserPromise
+  extends Promise<AggregateUser>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUser>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface UserConnection {
+  pageInfo: PageInfo;
+  edges: UserEdge[];
+}
+
+export interface UserConnectionPromise
+  extends Promise<UserConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<UserEdge>>() => T;
+  aggregate: <T = AggregateUserPromise>() => T;
+}
+
+export interface UserConnectionSubscription
+  extends Promise<AsyncIterator<UserConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateUserSubscription>() => T;
 }
 
 export interface PageInfo {
@@ -1473,20 +1498,20 @@ export interface PageInfoSubscription
   endCursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregatePost {
-  count: Int;
+export interface BatchPayload {
+  count: Long;
 }
 
-export interface AggregatePostPromise
-  extends Promise<AggregatePost>,
+export interface BatchPayloadPromise
+  extends Promise<BatchPayload>,
     Fragmentable {
-  count: () => Promise<Int>;
+  count: () => Promise<Long>;
 }
 
-export interface AggregatePostSubscription
-  extends Promise<AsyncIterator<AggregatePost>>,
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayload>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  count: () => Promise<AsyncIterator<Long>>;
 }
 
 export interface CrewConnection {
@@ -1510,50 +1535,21 @@ export interface CrewConnectionSubscription
   aggregate: <T = AggregateCrewSubscription>() => T;
 }
 
-export interface UserSubscriptionPayload {
-  mutation: MutationType;
-  node: User;
-  updatedFields: String[];
-  previousValues: UserPreviousValues;
+export interface PostEdge {
+  node: Post;
+  cursor: String;
 }
 
-export interface UserSubscriptionPayloadPromise
-  extends Promise<UserSubscriptionPayload>,
+export interface PostEdgePromise extends Promise<PostEdge>, Fragmentable {
+  node: <T = PostPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface PostEdgeSubscription
+  extends Promise<AsyncIterator<PostEdge>>,
     Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = UserPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = UserPreviousValuesPromise>() => T;
-}
-
-export interface UserSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = UserSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = UserPreviousValuesSubscription>() => T;
-}
-
-export interface PostConnection {
-  pageInfo: PageInfo;
-  edges: PostEdge[];
-}
-
-export interface PostConnectionPromise
-  extends Promise<PostConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<PostEdge>>() => T;
-  aggregate: <T = AggregatePostPromise>() => T;
-}
-
-export interface PostConnectionSubscription
-  extends Promise<AsyncIterator<PostConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<PostEdgeSubscription>>>() => T;
-  aggregate: <T = AggregatePostSubscription>() => T;
+  node: <T = PostSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface Post {
@@ -1561,6 +1557,7 @@ export interface Post {
   title: String;
   description: String;
   files: String[];
+  creationDate: DateTimeOutput;
 }
 
 export interface PostPromise extends Promise<Post>, Fragmentable {
@@ -1570,6 +1567,7 @@ export interface PostPromise extends Promise<Post>, Fragmentable {
   files: () => Promise<String[]>;
   postedBy: <T = UserPromise>() => T;
   belongTo: <T = CrewPromise>() => T;
+  creationDate: () => Promise<DateTimeOutput>;
 }
 
 export interface PostSubscription
@@ -1581,6 +1579,7 @@ export interface PostSubscription
   files: () => Promise<AsyncIterator<String[]>>;
   postedBy: <T = UserSubscription>() => T;
   belongTo: <T = CrewSubscription>() => T;
+  creationDate: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 export interface PostNullablePromise
@@ -1592,6 +1591,7 @@ export interface PostNullablePromise
   files: () => Promise<String[]>;
   postedBy: <T = UserPromise>() => T;
   belongTo: <T = CrewPromise>() => T;
+  creationDate: () => Promise<DateTimeOutput>;
 }
 
 export interface CrewPreviousValues {
@@ -1723,74 +1723,99 @@ export interface CrewNullablePromise
   }) => T;
 }
 
-export interface AggregateUser {
+export interface PostConnection {
+  pageInfo: PageInfo;
+  edges: PostEdge[];
+}
+
+export interface PostConnectionPromise
+  extends Promise<PostConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<PostEdge>>() => T;
+  aggregate: <T = AggregatePostPromise>() => T;
+}
+
+export interface PostConnectionSubscription
+  extends Promise<AsyncIterator<PostConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<PostEdgeSubscription>>>() => T;
+  aggregate: <T = AggregatePostSubscription>() => T;
+}
+
+export interface UserSubscriptionPayload {
+  mutation: MutationType;
+  node: User;
+  updatedFields: String[];
+  previousValues: UserPreviousValues;
+}
+
+export interface UserSubscriptionPayloadPromise
+  extends Promise<UserSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = UserPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = UserPreviousValuesPromise>() => T;
+}
+
+export interface UserSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = UserSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = UserPreviousValuesSubscription>() => T;
+}
+
+export interface AggregatePost {
   count: Int;
 }
 
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
+export interface AggregatePostPromise
+  extends Promise<AggregatePost>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
+export interface AggregatePostSubscription
+  extends Promise<AsyncIterator<AggregatePost>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface PostEdge {
-  node: Post;
+export interface UserEdge {
+  node: User;
   cursor: String;
 }
 
-export interface PostEdgePromise extends Promise<PostEdge>, Fragmentable {
-  node: <T = PostPromise>() => T;
+export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
+  node: <T = UserPromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface PostEdgeSubscription
-  extends Promise<AsyncIterator<PostEdge>>,
+export interface UserEdgeSubscription
+  extends Promise<AsyncIterator<UserEdge>>,
     Fragmentable {
-  node: <T = PostSubscription>() => T;
+  node: <T = UserSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface BatchPayload {
-  count: Long;
+export interface AggregateCrew {
+  count: Int;
 }
 
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
+export interface AggregateCrewPromise
+  extends Promise<AggregateCrew>,
     Fragmentable {
-  count: () => Promise<Long>;
+  count: () => Promise<Int>;
 }
 
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
+export interface AggregateCrewSubscription
+  extends Promise<AsyncIterator<AggregateCrew>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
-}
-
-export interface UserConnection {
-  pageInfo: PageInfo;
-  edges: UserEdge[];
-}
-
-export interface UserConnectionPromise
-  extends Promise<UserConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<UserEdge>>() => T;
-  aggregate: <T = AggregateUserPromise>() => T;
-}
-
-export interface UserConnectionSubscription
-  extends Promise<AsyncIterator<UserConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateUserSubscription>() => T;
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 /*
@@ -1803,6 +1828,12 @@ The `Int` scalar type represents non-fractional signed whole numeric values. Int
 */
 export type Int = number;
 
+/*
+The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
+*/
+export type ID_Input = string | number;
+export type ID_Output = string;
+
 export type Long = string;
 
 /*
@@ -1811,10 +1842,14 @@ The `String` scalar type represents textual data, represented as UTF-8 character
 export type String = string;
 
 /*
-The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
+DateTime scalar input type, allowing Date
 */
-export type ID_Input = string | number;
-export type ID_Output = string;
+export type DateTimeInput = Date | string;
+
+/*
+DateTime scalar output type, which is always a string
+*/
+export type DateTimeOutput = string;
 
 /**
  * Model Metadata

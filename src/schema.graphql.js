@@ -24,6 +24,7 @@ type Post{
     files: [String!]!
     postedBy: User!
     belongTo: Crew!
+    creationDate: String!
 
 }
 type AuthPayload{
